@@ -1,0 +1,42 @@
+name: atlatic_web3
+
+packages:
+  - packages/*
+
+scripts:
+  hello: echo 'Hello World'
+
+  format:
+    run: |
+      melos exec -- "flutter format --output=none --set-exit-if-changed ."
+    description: Verify formatting.
+
+  analyze:
+    run: |
+      melos exec -- "flutter analyze --fatal-infos"
+    description: Analyze project source.
+
+  test:
+    run: |
+      melos exec -- "flutter test"
+    description: Run `flutter test` for a specific package.
+    packageFilters:
+      dirExists:
+        - test
+
+  build:android:
+    run: |
+      melos exec -- "flutter build apk"
+    description: Build a specific example app for Android.
+    packageFilters:
+      dirExists:
+        - android
+
+  build:ios:
+    run: |
+      melos exec -- flutter build ios --no-codesign"
+    description: Build a specific example app for iOS.
+    packageFilters:
+      dirExists:
+        - ios
+

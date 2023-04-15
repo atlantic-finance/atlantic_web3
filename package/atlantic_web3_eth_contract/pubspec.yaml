@@ -1,0 +1,20 @@
+name: atlantic_web3_eth_contract
+version: 0.0.1
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+
+dependencies:
+  #atlantic web3
+  atlantic_web3_core:
+    path: ../atlantic_web3_core
+  #providers
+  atlantic_web3_providers_http:
+    path: ../atlantic_web3_providers_http
+  atlantic_web3_providers_ipc:
+    path: ../atlantic_web3_providers_ipc
+  atlantic_web3_providers_ws:
+    path: ../atlantic_web3_providers_ws
+
+dev_dependencies:
+  test: ^1.17.1
