@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('parses full object', () async {

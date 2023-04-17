@@ -21,6 +21,7 @@
 #.vscode/
 
 # Flutter/Dart/Pub related
+/doc
 **/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins

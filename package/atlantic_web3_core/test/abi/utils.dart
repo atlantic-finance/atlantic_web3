@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void expectEncodes<T>(AbiType<T> type, T data, String encoded) {
   final buffer = LengthTrackingByteSink();

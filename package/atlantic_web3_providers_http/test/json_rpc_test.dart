@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:atlantic_web3_providers_http/src/json_rpc.dart';
 import 'package:http/http.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 final uri = Uri.parse('url');
 

@@ -1,6 +1,6 @@
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
 import 'package:atlantic_web3_providers_http/src/http_provider.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   const String BASE_URL = 'http://localhost:7545';

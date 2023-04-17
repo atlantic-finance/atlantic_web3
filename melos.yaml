@@ -1,4 +1,9 @@
 name: atlatic_web3
+repository: https://github.com/atlantic-finance/atlantic_web3
+
+ide:
+  intellij:
+    enabled: true
 
 packages:
   - packages/*
@@ -19,24 +24,16 @@ scripts:
   test:
     run: |
       melos exec -- "flutter test"
-    description: Run `flutter test` for a specific package.
-    packageFilters:
-      dirExists:
-        - test
+    description: Run `flutter test` for a specific package.   
 
   build:android:
     run: |
       melos exec -- "flutter build apk"
     description: Build a specific example app for Android.
-    packageFilters:
-      dirExists:
-        - android
 
   build:ios:
     run: |
-      melos exec -- flutter build ios --no-codesign"
+      melos exec -- "flutter build ios --no-codesign"
     description: Build a specific example app for iOS.
-    packageFilters:
-      dirExists:
-        - ios
+  
 

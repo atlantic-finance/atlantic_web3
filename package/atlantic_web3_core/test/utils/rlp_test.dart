@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-import 'rlp_test_vectors.dart' as data;
+import 'data/rlp_test_vectors.dart' as data;
 
 void main() {
   final testContent = json.decode(data.content) as Map;

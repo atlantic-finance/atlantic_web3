@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import 'data/basic_abi_tests.dart' as basic;
 import 'data/integers.dart' as ints;

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-import 'example_keystores.dart' as data;
+import 'data/example_keystores.dart' as data;
 
 void main() {
   final wallets = json.decode(data.content) as Map;

@@ -1,5 +1,5 @@
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 final pubKeys = {
   '038e5d1fccb6b800b4e0fde5080a8c3628a302c4767e7687bea79ba24c6ac268e2':

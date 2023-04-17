@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:async/async.dart';
 import 'package:http/http.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 class MockClient extends BaseClient {
   MockClient(this.handler);

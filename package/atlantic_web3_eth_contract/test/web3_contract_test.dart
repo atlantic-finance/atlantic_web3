@@ -1,7 +1,7 @@
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
 import 'package:atlantic_web3_eth_contract/atlantic_web3_eth_contract.dart';
 import 'package:atlantic_web3_providers_http/atlantic_web3_providers_http.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late Web3Contract web3;
