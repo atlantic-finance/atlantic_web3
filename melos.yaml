@@ -15,25 +15,35 @@ scripts:
     run: |
       melos exec -- "flutter format --output=none --set-exit-if-changed ."
     description: Verify formatting.
+    packageFilters:
+      flutter: true
 
   analyze:
     run: |
       melos exec -- "flutter analyze --fatal-infos"
     description: Analyze project source.
+    packageFilters:
+      flutter: true
 
   test:
     run: |
       melos exec -- "flutter test"
-    description: Run `flutter test` for a specific package.   
+    description: Run `flutter test` for a specific package.
+    packageFilters:
+      flutter: true
 
   build:android:
     run: |
       melos exec -- "flutter build apk"
     description: Build a specific example app for Android.
+    packageFilters:
+      flutter: true
 
   build:ios:
     run: |
       melos exec -- "flutter build ios --no-codesign"
     description: Build a specific example app for iOS.
+    packageFilters:
+      flutter: true
   
 

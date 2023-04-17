@@ -1,4 +1,4 @@
-name: atlatic_web3_workspace
+name: melos_atlantic_web3
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
