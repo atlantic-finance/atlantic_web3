@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: atlantic_web3_core
+dependency_overrides:
+  atlantic_web3_core:
+    path: ../atlantic_web3_core

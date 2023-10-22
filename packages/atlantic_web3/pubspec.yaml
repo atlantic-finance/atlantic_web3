@@ -1,12 +1,12 @@
 name: atlantic_web3
-description: Dart library to connect to Ethereum clients. Send transactions and interact with smart contracts!
-version: 2.6.1
-homepage: https://pwa.ir
-repository: https://github.com/xclud/web3dart
+description: Biblioteca Dart para conectarse a clientes de Ethereum. ¡Envíe transacciones e interactúe con contratos inteligentes!
+version: 0.0.1
+
+publish_to: https://dart.pkg.jetbrains.space/novasoftware/p/atlantic-web-3/atlantic-web3/
 
 environment:
-  sdk: '>=2.18.0 <3.0.0'
-  flutter: '>=3.7.0'
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: '>=3.10.0'
 
 dependencies:
   flutter:

@@ -65,7 +65,7 @@ class Mnemonic implements IBIP39 {
       }
     }
 
-    print(buffer.toString().trim());
+    //print(buffer.toString().trim());
 
     final key = utf8.encode(buffer.toString().trim()); //words
     final derive = utf8.encode(passphrase); //passphrase
