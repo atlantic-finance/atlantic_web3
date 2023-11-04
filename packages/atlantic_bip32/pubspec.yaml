@@ -1,6 +1,9 @@
 name: atlantic_bip32
 description: A BIP32 (https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) compatible library for Flutter writing by Dart.
 version: 0.0.1
+homepage: http://atlantic.lat
+
+publish_to: https://dart.pkg.jetbrains.space/novasoftware/p/atlantic-web-3/atlantic-bip32/
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
