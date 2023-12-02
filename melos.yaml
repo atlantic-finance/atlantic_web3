@@ -9,7 +9,14 @@ packages:
   - packages/*
 
 scripts:
-  hello: echo 'Hello World'
+  ping: echo 'Hello World'
+
+  get:
+    run: |
+      melos exec -- "flutter pub get"
+    description: Get dependencies.
+    packageFilters:
+      flutter: true
 
   format:
     run: |
@@ -31,19 +38,3 @@ scripts:
     description: Run `flutter test` for a specific package.
     packageFilters:
       flutter: true
-
-  build:android:
-    run: |
-      melos exec -- "flutter build apk"
-    description: Build a specific example app for Android.
-    packageFilters:
-      flutter: true
-
-  build:ios:
-    run: |
-      melos exec -- "flutter build ios --no-codesign"
-    description: Build a specific example app for iOS.
-    packageFilters:
-      flutter: true
-  
-
