@@ -1,3 +1,3 @@
-library atlantic_web3_eth_accounts;
+library atlantic_web3_authentication;
 
-export 'src/web3_accounts.dart';
+export 'src/web3_authentication.dart';

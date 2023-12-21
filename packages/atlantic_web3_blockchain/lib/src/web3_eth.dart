@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:atlantic_web3_core/atlantic_web3_core.dart' as rlp;
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
 
-class Web3Eth implements IWeb3Eth {
+class Web3Eth implements IWeb3Blockchain {
   static const EthBlockNum _defaultBlock = EthBlockNum.current();
 
   // Principal

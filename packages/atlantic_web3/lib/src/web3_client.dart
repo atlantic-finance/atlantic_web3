@@ -13,37 +13,57 @@ import 'package:atlantic_web3/atlantic_web3.dart';
  */
 class Web3Client implements IWeb3Client {
   // Principal
+  late final String _name;
   late final String _version;
-  late final BaseProvider _provider;
+  BaseProvider? _provider;
 
   // Modules
-  late final IWeb3Eth _eth;
-  // late final IWeb3Net _net;
+  late final IWeb3Blockchain _eth;
+  late final IWeb3Authentication _auth;
   // late final IWeb3Utils _utils;
 
-  /// Starts a client that connects to a JSON rpc API, available at [url]. The
-  /// [httpClient] will be used to send requests to the rpc server.
-  /// Am isolate will be used to perform expensive operations, such as signing
-  /// transactions or computing private keys.
+  // Instancia privada
+  static Web3Client? _instance = null;
+
+  static Web3Client get instance {
+    if (_instance == null) {
+      throw new AssertionError('You must initialize the Web3Client instance before calling Web3Client.instance');
+    }
+    return _instance!;
+  }
+
+  static Future<Web3Client> initialize({required String name, required BaseProvider provider,}) async {
+    if (_instance == null) {
+       _instance = Web3Client._(name, provider);
+    } else {
+      throw new AssertionError('This instance is already initialized');
+    }
+    return _instance!;
+  }
+
   // ignore: sort_constructors_first
-  Web3Client(BaseProvider provider) {
+  Web3Client._(String name, BaseProvider provider) {
     // Principal
+    this._name = name;
     this._version = 'v0.0.1';
     this._provider = provider;
     // Modules
-    this._eth = Web3Eth(_provider);
-    // this._net = Web3Net(_provider);
+    this._eth = Web3Eth(_provider!);
+    this._auth = Web3Authentication(_provider!);
     // this._utils = Web3Utils(_provider);
   }
 
   @override
-  IWeb3Eth get eth => _eth;
+  IWeb3Blockchain get eth => _eth;
 
-  // @override
-  // IWeb3Net get net => _net;
+  @override
+  IWeb3Authentication get auth => _auth;
   //
   // @override
   // IWeb3Utils get utils => _utils;
+
+  @override
+  String get name => _name;
 
   @override
   String get version => _version;
