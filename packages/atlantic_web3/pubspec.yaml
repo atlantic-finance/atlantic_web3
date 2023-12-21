@@ -1,5 +1,5 @@
 name: atlantic_web3
-description: Biblioteca Dart para conectarse a clientes de Ethereum. ¡Envíe transacciones e interactúe con contratos inteligentes!
+description: Biblioteca Dart para trabajar con la web3
 version: 0.0.1
 
 publish_to: https://dart.pkg.jetbrains.space/novasoftware/p/atlantic-web-3/atlantic-web3/
@@ -12,20 +12,28 @@ dependencies:
   flutter:
     sdk: flutter
 
-  #atlantic web3
-  atlantic_web3_eth:
-    path: ../atlantic_web3_eth
-  atlantic_web3_net:
-    path: ../atlantic_web3_net
-  atlantic_web3_utils:
-    path: ../atlantic_web3_utils
-  #providers
-  atlantic_web3_providers_http:
-    path: ../atlantic_web3_providers_http
-  atlantic_web3_providers_ipc:
-    path: ../atlantic_web3_providers_ipc
-  atlantic_web3_providers_ws:
-    path: ../atlantic_web3_providers_ws
+  #modulos de atlantic web3
+  atlantic_web3_passkey:
+    path: ../atlantic_web3_passkey
+
+  atlantic_web3_authentication:
+    path: ../atlantic_web3_authentication
+
+  atlantic_web3_payment:
+    path: ../atlantic_web3_payment
+
+  atlantic_web3_contract:
+    path: ../atlantic_web3_contract
+
+  atlantic_web3_gasfee:
+    path: ../atlantic_web3_gasfee
+
+  atlantic_web3_storage:
+    path: ../atlantic_web3_storage
+
+  atlantic_web3_blockchain:
+    path: ../atlantic_web3_blockchain
+
 
 dev_dependencies:
   flutter_test:

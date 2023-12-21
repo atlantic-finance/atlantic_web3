@@ -3,12 +3,9 @@ import 'dart:typed_data';
 import '../../atlantic_web3_core.dart';
 
 abstract class IWeb3Eth {
-  IWeb3Abi get abi;
 
-  IWeb3Accounts get accounts;
-
-  IWeb3Contract contract(
-      BaseProvider provider, ContractAbi abi, EthAddress address);
+  // IWeb3Contract contract(
+  //     BaseProvider provider, ContractAbi abi, EthAddress address);
 
   Future<EthPrivateKey> credentialsFromPrivateKey(String privateKey);
 

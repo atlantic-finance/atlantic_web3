@@ -1,0 +1,31 @@
+name: atlantic_web3_gasfee
+version: 0.0.1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  #atlantic web3
+  atlantic_web3_core:
+    path: ../atlantic_web3_core
+  #providers
+  web3_providers_http:
+    path: ../web3_providers_http
+  web3_providers_ipc:
+    path: ../web3_providers_ipc
+  web3_providers_ws:
+    path: ../web3_providers_ws
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+flutter:
+  uses-material-design: true

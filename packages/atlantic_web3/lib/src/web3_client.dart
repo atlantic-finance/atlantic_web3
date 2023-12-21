@@ -18,8 +18,8 @@ class Web3Client implements IWeb3Client {
 
   // Modules
   late final IWeb3Eth _eth;
-  late final IWeb3Net _net;
-  late final IWeb3Utils _utils;
+  // late final IWeb3Net _net;
+  // late final IWeb3Utils _utils;
 
   /// Starts a client that connects to a JSON rpc API, available at [url]. The
   /// [httpClient] will be used to send requests to the rpc server.
@@ -32,18 +32,18 @@ class Web3Client implements IWeb3Client {
     this._provider = provider;
     // Modules
     this._eth = Web3Eth(_provider);
-    this._net = Web3Net(_provider);
-    this._utils = Web3Utils(_provider);
+    // this._net = Web3Net(_provider);
+    // this._utils = Web3Utils(_provider);
   }
 
   @override
   IWeb3Eth get eth => _eth;
 
-  @override
-  IWeb3Net get net => _net;
-
-  @override
-  IWeb3Utils get utils => _utils;
+  // @override
+  // IWeb3Net get net => _net;
+  //
+  // @override
+  // IWeb3Utils get utils => _utils;
 
   @override
   String get version => _version;
