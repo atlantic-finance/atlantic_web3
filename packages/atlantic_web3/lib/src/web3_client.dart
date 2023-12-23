@@ -25,14 +25,14 @@ class Web3Client implements IWeb3Client {
   // Instancia privada
   static Web3Client? _instance = null;
 
-  static Web3Client get instance {
+  static IWeb3Client get instance {
     if (_instance == null) {
       throw new AssertionError('You must initialize the Web3Client instance before calling Web3Client.instance');
     }
     return _instance!;
   }
 
-  static Future<Web3Client> initialize({required String name, required BaseProvider provider,}) async {
+  static Future<IWeb3Client> initialize({required String name, required BaseProvider provider,}) async {
     if (_instance == null) {
        _instance = Web3Client._(name, provider);
     } else {
