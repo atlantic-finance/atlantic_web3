@@ -218,7 +218,7 @@ class Wallet {
     final aes = _initCipher(false, aesKey, iv);
 
     final privateKey = aes.process(Uint8List.fromList(encryptedPrivateKey));
-    final credentials = EthPrivateKey(privateKey);
+    final credentials = EthPrivateKey(bytesToHex(privateKey), privateKey);
 
     final id = parseUuid(data['id'] as String);
 

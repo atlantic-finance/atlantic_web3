@@ -436,7 +436,7 @@ class Web3Eth implements IWeb3Blockchain {
     bool fetchChainIdFromNetworkId = false,
   }) async {
     final signingInput = await _fillMissingData(
-      credentials: cred,
+      credentials: cred as CredentialsWithKnownAddress,
       transaction: transaction,
       chainId: chainId,
       loadChainIdFromNetwork: fetchChainIdFromNetworkId,
@@ -493,7 +493,7 @@ class Web3Eth implements IWeb3Blockchain {
   }
 
   Future<_SigningInput> _fillMissingData({
-    required Credentials credentials,
+    required CredentialsWithKnownAddress credentials,
     required EthTransaction2 transaction,
     int? chainId,
     bool loadChainIdFromNetwork = false,
@@ -505,7 +505,7 @@ class Web3Eth implements IWeb3Blockchain {
       );
     }
 
-    final sender = transaction.from ?? credentials.address;
+    final sender = transaction.from ?? credentials.getEthAddress();
     var gasPrice = transaction.gasPrice;
 
     if (client == null &&

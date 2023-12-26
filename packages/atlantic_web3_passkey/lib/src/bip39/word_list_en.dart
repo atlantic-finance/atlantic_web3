@@ -1,5 +1,5 @@
-class WordList {
-  static final List<String> english = [
+class WordListEn {
+  static final List<String> word = [
     'abandon',
     'ability',
     'able',

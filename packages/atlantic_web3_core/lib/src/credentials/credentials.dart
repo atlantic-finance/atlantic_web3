@@ -14,10 +14,10 @@ abstract class Credentials {
   bool get isolateSafe => false;
 
   /// Loads the ethereum address specified by these credentials.
-  @Deprecated('Please use [address]')
-  Future<EthAddress> extractAddress();
+  // @Deprecated('Please use [address]')
+  // Future<EthAddress> extractAddress();
 
-  EthAddress get address;
+  //EthAddress get address;
 
   /// Signs the [payload] with a private key. The output will be like the
   /// bytes representation of the [eth_sign RPC method](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign),
@@ -108,14 +108,21 @@ abstract class Credentials {
 /// Credentials where the [address] is known synchronously.
 abstract class CredentialsWithKnownAddress extends Credentials {
   /// The ethereum address belonging to this credential.
-  @override
-  EthAddress get address;
+  // @override
+  // EthAddress get address;
+  //
+  // @Deprecated('Please use [address]')
+  // @override
+  // Future<EthAddress> extractAddress() async {
+  //   return Future.value(address);
+  // }
+  EthAddress getEthAddress();
 
-  @Deprecated('Please use [address]')
-  @override
-  Future<EthAddress> extractAddress() async {
-    return Future.value(address);
-  }
+  EthPublicKey getEthPublicKey();
+
+  String toHex();
+
+  List<int> toBytes();
 }
 
 /// Interface for [Credentials] that don't sign transactions locally, for

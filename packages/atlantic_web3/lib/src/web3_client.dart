@@ -18,9 +18,9 @@ class Web3Client implements IWeb3Client {
   BaseProvider? _provider;
 
   // Modules
-  late final IWeb3Blockchain _eth;
+  late final IWeb3Passkey _passkey;
   late final IWeb3Authentication _auth;
-  // late final IWeb3Utils _utils;
+  late final IWeb3Blockchain _eth;
 
   // Instancia privada
   static Web3Client? _instance = null;
@@ -48,19 +48,19 @@ class Web3Client implements IWeb3Client {
     this._version = 'v0.0.1';
     this._provider = provider;
     // Modules
-    this._eth = Web3Eth(_provider!);
+    this._passkey = Web3Passkey();
     this._auth = Web3Authentication(_provider!);
-    // this._utils = Web3Utils(_provider);
+    this._eth = Web3Eth(_provider!);
   }
 
   @override
-  IWeb3Blockchain get eth => _eth;
+  IWeb3Passkey get passkey => _passkey;
 
   @override
   IWeb3Authentication get auth => _auth;
-  //
-  // @override
-  // IWeb3Utils get utils => _utils;
+
+  @override
+  IWeb3Blockchain get eth => _eth;
 
   @override
   String get name => _name;

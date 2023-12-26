@@ -1,19 +1,12 @@
-import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
 import 'package:crypto/crypto.dart';
 
-abstract class IBIP32 {
-  String toHex();
 
-  List<int> toBytes();
 
-  EthPrivateKey toPrivateKey();
-}
-
-class Seed implements IBIP32 {
+class EthSeedPrivateKey implements IBIP32 {
   final Digest _digest;
 
-  Seed(this._digest);
+  EthSeedPrivateKey(this._digest);
 
   @override
   String toHex() {

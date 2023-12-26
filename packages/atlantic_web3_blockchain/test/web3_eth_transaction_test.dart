@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:atlantic_web3_core/atlantic_web3_core.dart' as rlp;
 import 'package:atlantic_web3_blockchain/atlantic_web3_blockchain.dart';
-import 'package:web3_providers_http/web3_providers_http.dart';
+import 'package:atlantic_web3_core/atlantic_web3_core.dart' as rlp;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:web3_providers_http/web3_providers_http.dart';
 
 const rawJson = '''[
     {
@@ -151,7 +151,7 @@ void main() {
       final credentials =
           EthPrivateKey.fromHex(strip0x(tx['privateKey'] as String));
       final transaction = EthTransaction2(
-        from: credentials.address,
+        from: credentials.getEthAddress(),
         to: EthAddress.fromHex(tx['to'] as String),
         nonce: tx['nonce'] as int,
         gas: tx['gasLimit'] as int,
@@ -186,7 +186,7 @@ void main() {
       'a2fd51b96dc55aeb14b30d55a6b3121c7b9c599500c1beb92a389c3377adc86e',
     );
     final transaction = EthTransaction2(
-      from: credentials.address,
+      from: credentials.getEthAddress(),
       to: EthAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
       nonce: 0,
       gasPrice: EthAmount.inWei(BigInt.one),

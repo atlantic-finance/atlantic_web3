@@ -1,56 +1,55 @@
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
 import 'package:atlantic_web3_core/src/crypto/secp256k1.dart' as secp256k1;
 import 'package:atlantic_web3_core/src/utils/equality.dart' as eq;
-import 'package:pointycastle/ecc/api.dart' show ECPoint;
 
-/// Credentials that can sign payloads with an Ethereum private key.
-class EthPrivateKey extends CredentialsWithKnownAddress {
+
+/// Credenciales que pueden firmar cargas útiles con una clave privada de Ethereum.
+final class EthPrivateKey extends CredentialsWithKnownAddress {
   /// Creates a private key from a byte array representation.
   ///
   /// The bytes are interpreted as an unsigned integer forming the private key.
-  EthPrivateKey(this.privateKey)
+  EthPrivateKey(this.hex, this.privateKey)
       : privateKeyInt = bytesToUnsignedInt(privateKey);
 
   /// Parses a private key from a hexadecimal representation.
-  EthPrivateKey.fromHex(String hex) : this(hexToBytes(hex));
+  EthPrivateKey.fromHex(String hex) : this(hex, hexToBytes(hex));
 
   /// Creates a private key from the underlying number.
-  EthPrivateKey.fromInt(this.privateKeyInt)
-      : privateKey = unsignedIntToBytes(privateKeyInt);
+  // EthPrivateKey.fromInt(this.privateKeyInt) {
+  //   this.privateKey = unsignedIntToBytes(privateKeyInt);
+  //   this.hex = bytesToHex(privateKey as List<int>);
+  // }
 
-  /// Creates a new, random private key from the [random] number generator.
-  ///
-  /// For security reasons, it is very important that the random generator used
-  /// is cryptographically secure. The private key could be reconstructed by
-  /// someone else otherwise. Just using [Random()] is a very bad idea! At least
-  /// use [Random.secure()].
-  factory EthPrivateKey.createRandom(Random random) {
-    final key = generateNewPrivateKey(random);
-    return EthPrivateKey(intToBytes(key));
-  }
 
   /// ECC's d private parameter.
   final BigInt privateKeyInt;
   final Uint8List privateKey;
-  EthAddress? _cachedAddress;
+  final String hex;
 
   @override
   final bool isolateSafe = true;
 
   @override
-  EthAddress get address {
-    return _cachedAddress ??=
-        EthAddress(publicKeyToAddress(privateKeyToPublic(privateKeyInt)));
+  EthAddress getEthAddress() {
+    return EthAddress(publicKeyToAddress(privateKeyToPublic(privateKeyInt)));
   }
 
-  /// Get the encoded public key in an (uncompressed) byte representation.
-  Uint8List get encodedPublicKey => privateKeyToPublic(privateKeyInt);
+  @override
+  EthPublicKey getEthPublicKey() {
+    return EthPublicKey(privateKeyInt, privateKey);
+  }
 
-  /// The public key corresponding to this private key.
-  ECPoint get publicKey => (params.G * privateKeyInt)!;
+  @override
+  String toHex() {
+    return hex;
+  }
+
+  @override
+  List<int> toBytes() {
+    return privateKey;
+  }
 
   @Deprecated('Please use [signToSignatureSync]')
   @override
@@ -75,11 +74,7 @@ class EthPrivateKey extends CredentialsWithKnownAddress {
   }
 
   @override
-  MsgSignature signToEcSignature(
-    Uint8List payload, {
-    int? chainId,
-    bool isEIP1559 = false,
-  }) {
+  MsgSignature signToEcSignature(Uint8List payload, {int? chainId, bool isEIP1559 = false,}) {
     final signature = secp256k1.sign(keccak256(payload), privateKey);
 
     // https://github.com/ethereumjs/ethereumjs-util/blob/8ffe697fafb33cefc7b7ec01c11e3a7da787fe0e/src/signature.ts#L26
