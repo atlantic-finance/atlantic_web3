@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:atlantic_web3_core/atlantic_web3_core.dart';
 import 'package:atlantic_web3_passkey/atlantic_web3_passkey.dart';
+import 'package:atlantic_web3_passkey/src/utils/enums.dart';
 import 'package:bip32/bip32.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hex/hex.dart';
@@ -73,7 +74,7 @@ void main() {
     print('\n');
 
     // Max entropy = 256
-    final Mnemonic mnemonic = web3.generateMnemonic(length: 24);
+    final Mnemonic mnemonic = web3.generateMnemonic(length: 24, language: Language.spanish);
     print('Mnemonic: ${mnemonic.getWords()}');
     print('\n');
 
