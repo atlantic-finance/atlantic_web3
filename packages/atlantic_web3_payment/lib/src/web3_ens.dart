@@ -1,1 +1,0 @@
-class Web3ENS {}

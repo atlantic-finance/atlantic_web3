@@ -4,14 +4,23 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:atlantic_web3_core/atlantic_web3_core.dart';
+import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_passkey/atlantic_web3_passkey.dart';
 import 'package:atlantic_web3_passkey/src/bip39/word_list_es.dart';
-import 'package:atlantic_web3_passkey/src/utils/enums.dart';
 import 'package:crypto/crypto.dart';
 
 class Web3Passkey implements IWeb3Passkey {
-  Web3Passkey();
+  // Instancia privada
+  static Web3Passkey? _instance = null;
+
+  static IWeb3Passkey instance() {
+    if (_instance == null) {
+      _instance = Web3Passkey._();
+    }
+    return _instance!;
+  }
+
+  Web3Passkey._();
 
   @override
   Mnemonic generateMnemonic({int length = 12, Language language = Language.english}) {
@@ -97,5 +106,11 @@ class Web3Passkey implements IWeb3Passkey {
     final checksum = data.length ~/ 4; // 32 / 8 = 4 bits
     final List<int> hash = sha256.convert(data).bytes;
     return hash.toBinary().substring(0, checksum);
+  }
+
+  @override
+  EthPrivateKey getDefaultEthPrivateKey() {
+    // TODO: implement getDefaultEthPrivateKey
+    throw UnimplementedError();
   }
 }

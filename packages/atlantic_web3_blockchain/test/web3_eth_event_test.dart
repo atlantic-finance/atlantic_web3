@@ -1,12 +1,12 @@
 import 'package:atlantic_web3_blockchain/atlantic_web3_blockchain.dart';
-import 'package:web3_providers_http/web3_providers_http.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:web3_providers_http/web3_providers_http.dart';
 
 void main() {
   late Web3Eth web3;
 
   setUp(() async {
-    web3 = Web3Eth(HttpProvider('http://localhost:7545'));
+    web3 = Web3Eth(HttpProvider('http://localhost:7545') as BaseProvider);
   });
 
   /*
@@ -143,7 +143,7 @@ void main() {
     //   }),
     // );
 
-    final web3 = Web3Eth(HttpProvider(''));
+    final web3 = Web3Eth(HttpProvider('') as BaseProvider);
     addTearDown(web3.cleanEvent);
 
     // Dart typing will not allow an empty list to be added so when an empty

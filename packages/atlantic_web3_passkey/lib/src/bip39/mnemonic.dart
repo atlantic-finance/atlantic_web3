@@ -1,6 +1,4 @@
-import 'package:atlantic_web3_core/atlantic_web3_core.dart';
-
-
+import 'package:atlantic_web3/atlantic_web3.dart';
 
 class Mnemonic implements IBIP39 {
   late List<String> _words;

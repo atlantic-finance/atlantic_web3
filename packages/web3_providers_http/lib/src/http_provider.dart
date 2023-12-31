@@ -1,4 +1,4 @@
-import 'package:atlantic_web3_core/atlantic_web3_core.dart';
+import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:http/http.dart';
 import 'package:json_rpc_2/json_rpc_2.dart' as rpc;
 

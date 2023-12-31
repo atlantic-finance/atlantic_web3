@@ -1,7 +1,5 @@
-import 'package:atlantic_web3_core/atlantic_web3_core.dart';
+import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:crypto/crypto.dart';
-
-
 
 class EthSeedPrivateKey implements IBIP32 {
   final Digest _digest;

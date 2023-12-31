@@ -25,8 +25,8 @@ dependencies:
   web_socket_channel: ^2.2.0
 
   #atlantic web3
-  atlantic_web3_core:
-    path: ../atlantic_web3_core
+  atlantic_web3:
+    path: ../atlantic_web3
   #providers
   web3_providers_http:
     path: ../web3_providers_http

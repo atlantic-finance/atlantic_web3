@@ -1,17 +1,16 @@
 import 'dart:typed_data';
 
-import 'package:atlantic_web3_core/atlantic_web3_core.dart';
+import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_passkey/atlantic_web3_passkey.dart';
-import 'package:atlantic_web3_passkey/src/utils/enums.dart';
 import 'package:bip32/bip32.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hex/hex.dart';
 
 void main() {
-  late Web3Passkey web3;
+  late IWeb3Passkey web3;
 
   setUp(() => {
-    web3 = Web3Passkey()
+    web3 = Web3Passkey.instance()
   });
 
   test('Web3Passkey.HMAC-SHA512()', () async {
@@ -47,7 +46,7 @@ void main() {
     print('\n');
 
     // Crear palabras
-    final Mnemonic mnemonic = web3.generateMnemonic();
+    final Mnemonic mnemonic = web3.generateMnemonic() as Mnemonic;
     print('Mnemonic: ${mnemonic.getWords()}');
     print('\n');
 
@@ -74,7 +73,7 @@ void main() {
     print('\n');
 
     // Max entropy = 256
-    final Mnemonic mnemonic = web3.generateMnemonic(length: 24, language: Language.spanish);
+    final Mnemonic mnemonic = web3.generateMnemonic(length: 24, language: Language.spanish) as Mnemonic;
     print('Mnemonic: ${mnemonic.getWords()}');
     print('\n');
 
@@ -149,7 +148,7 @@ void main() {
     print('\n');
 
     // Crear clave semilla
-    final EthSeedPrivateKey seed = web3.createDerivatePrivateKey(mnemonic, "m/44'/60'/0'/0/0");
+    final EthSeedPrivateKey seed = web3.createDerivatePrivateKey(mnemonic, "m/44'/60'/0'/0/0") as EthSeedPrivateKey;
 
     // Crear private key
     final EthPrivateKey privatekey = seed.toPrivateKey();

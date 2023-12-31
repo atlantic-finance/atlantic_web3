@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:atlantic_web3/atlantic_web3.dart' as rlp;
 import 'package:atlantic_web3_blockchain/atlantic_web3_blockchain.dart';
-import 'package:atlantic_web3_core/atlantic_web3_core.dart' as rlp;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:web3_providers_http/web3_providers_http.dart';
 
@@ -112,7 +112,7 @@ void main() {
   late Web3Eth web3;
 
   setUp(() async {
-    web3 = Web3Eth(HttpProvider('http://localhost:7545'));
+    web3 = Web3Eth(HttpProvider('http://localhost:7545') as BaseProvider);
   });
 
   /*
@@ -166,7 +166,7 @@ void main() {
         ),
       );
 
-      final client = Web3Eth(HttpProvider(''));
+      final client = Web3Eth(HttpProvider('') as BaseProvider);
       final signature =
           await client.signTransaction(credentials, transaction, chainId: 4);
 
@@ -194,7 +194,7 @@ void main() {
       value: EthAmount.inWei(BigInt.from(10)),
     );
 
-    final client = Web3Eth(HttpProvider(''));
+    final client = Web3Eth(HttpProvider('') as BaseProvider);
     final signature = await client.signTransaction(credentials, transaction);
 
     expect(
@@ -217,7 +217,7 @@ void main() {
       value: EthAmount.inWei(BigInt.from(1000000000000000000)),
     );
 
-    final client = Web3Eth(HttpProvider(''));
+    final client = Web3Eth(HttpProvider('') as BaseProvider);
     final signature = await client.signTransaction(credentials, transaction);
 
     expect(

@@ -1,7 +1,7 @@
-import 'package:atlantic_web3_core/atlantic_web3_core.dart';
+import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_contract/atlantic_web3_contract.dart';
-import 'package:web3_providers_http/web3_providers_http.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:web3_providers_http/web3_providers_http.dart';
 
 void main() {
   late Web3Contract web3;
@@ -15,7 +15,7 @@ void main() {
         EthAddress.fromHex('0x079420476b1024d3cBe013697Ba47497257e5175');
 
     web3 = Web3Contract(
-        HttpProvider('http://localhost:7545'), contractAbi, contractAddress);
+        HttpProvider('http://localhost:7545') as BaseProvider, contractAbi, contractAddress);
   });
 
   //echo

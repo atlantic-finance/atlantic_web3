@@ -12,8 +12,8 @@ dependencies:
   #client
   http: ^0.13.5
   #atlantic web3
-  atlantic_web3_core:
-    path: ../atlantic_web3_core
+  atlantic_web3:
+    path: ../atlantic_web3
 
 dev_dependencies:
   flutter_test:

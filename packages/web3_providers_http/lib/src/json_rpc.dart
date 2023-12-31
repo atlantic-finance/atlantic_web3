@@ -3,7 +3,7 @@ library json_rpc;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:atlantic_web3_core/atlantic_web3_core.dart';
+import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:http/http.dart';
 
 // ignore: one_member_abstracts
