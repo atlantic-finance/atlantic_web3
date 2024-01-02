@@ -13,8 +13,8 @@ abstract interface class IWeb3Blockchain {
 
   @Deprecated('Deprecated estimateGas2() use estimateGas()')
   Future<BigInt> estimateGas2({
-    EthAddress? from,
-    EthAddress? to,
+    EthAccount? from,
+    EthAccount? to,
     EthAmount? value,
     BigInt? gas,
     EthAmount? gasPrice,
@@ -25,7 +25,7 @@ abstract interface class IWeb3Blockchain {
 
   Future<List<dynamic>> getAccounts();
 
-  Future<EthAmount> getBalance(EthAddress address, {EthBlockNum? atBlock});
+  Future<EthAmount> getBalance(EthAccount address, {EthBlockNum? atBlock});
 
   Future<EthBlock> getBlock({
     EthBlockNum atBlock = const EthBlockNum.current(),
@@ -44,7 +44,7 @@ abstract interface class IWeb3Blockchain {
 
   Future<String> getClientVersion();
 
-  Future<EthAddress> getCoinbase();
+  Future<EthAccount> getCoinbase();
 
   Future<EthAmount> getGasPrice();
 
@@ -56,7 +56,7 @@ abstract interface class IWeb3Blockchain {
 
   Future<EthTransaction?> getTransaction(String txHash);
 
-  Future<int> getTransactionCount(EthAddress address, {EthBlockNum? atBlock});
+  Future<int> getTransactionCount(EthAccount address, {EthBlockNum? atBlock});
 
   Future<EthTransaction?> getTransactionFromBlock(
       EthBlockNum? atBlock, int index);
@@ -88,14 +88,14 @@ abstract interface class IWeb3Blockchain {
   Stream<String> getPendingTransactions();
 
   Future<String> sendTransaction(
-    Credentials cred,
+    Passkey cred,
     EthTransaction2 transaction, {
     int? chainId = 1,
     bool fetchChainIdFromNetworkId = false,
   });
 
   Future<Uint8List> signTransaction(
-    Credentials cred,
+    Passkey cred,
     EthTransaction2 transaction, {
     int? chainId = 1,
     bool fetchChainIdFromNetworkId = false,

@@ -5,6 +5,20 @@ import 'package:atlantic_web3/atlantic_web3.dart';
 class Web3Contract implements IWeb3Contract {
   static const EthBlockNum _defaultBlock = EthBlockNum.current();
 
+  // Instancia privada
+  static Web3Contract? _instance = null;
+
+  static IWeb3Contract instance(ContractAbi abi, EthAccount address) {
+    if (_instance == null) {
+      //provider
+      final provider = Web3Client.instance.defaultProvider;
+
+      //singleton
+      _instance = Web3Contract._(provider, abi, address);
+    }
+    return _instance!;
+  }
+
   // Principal
   late final BaseProvider _provider;
 
@@ -13,11 +27,11 @@ class Web3Contract implements IWeb3Contract {
   late final ContractAbi _abi;
 
   /// The Ethereum address at which this contract is reachable.
-  late final EthAddress _address;
+  late final EthAccount _address;
 
   late final FilterEngine _filters;
 
-  Web3Contract(BaseProvider provider, ContractAbi abi, EthAddress address) {
+  Web3Contract._(BaseProvider provider, ContractAbi abi, EthAccount address) {
     // Principal
     this._provider = provider;
     this._abi = abi;
@@ -33,7 +47,7 @@ class Web3Contract implements IWeb3Contract {
 
   ContractAbi get abi => _abi;
 
-  EthAddress get address => _address;
+  EthAccount get address => _address;
 
   /// Finds the event defined by the contract that has the matching [name].
   ///
@@ -64,7 +78,7 @@ class Web3Contract implements IWeb3Contract {
   /// would require a transaction which can be sent via [sendTransaction].
   /// As no data will be written, you can use the [sender] to specify any
   /// Ethereum address that would call that function. To use the address of a
-  /// credential, call [Credentials.address].
+  /// credential, call [Passkey.address].
   ///
   /// This function allows specifying a custom block mined in the past to get
   /// historical data. By default, [BlockNum.current] will be used.
@@ -92,7 +106,7 @@ class Web3Contract implements IWeb3Contract {
   /// would require a transaction which can be sent via [sendTransaction].
   /// As no data will be written, you can use the [from] to specify any
   /// Ethereum address that would call that function. To use the address of a
-  /// credential, call [Credentials.address].
+  /// credential, call [Passkey.address].
   ///
   /// This function allows specifying a custom block mined in the past to get
   /// historical data. By default, [BlockNum.current] will be used.
@@ -102,8 +116,8 @@ class Web3Contract implements IWeb3Contract {
   /// response.
   @override
   Future<String> callRaw({
-    EthAddress? from,
-    required EthAddress to,
+    EthAccount? from,
+    required EthAccount to,
     required Uint8List data,
     EthBlockNum? atBlock,
   }) {
@@ -125,7 +139,7 @@ class Web3Contract implements IWeb3Contract {
   /// This function allows specifying a custom block mined in the past to get
   /// historical data. By default, [BlockNum.current] will be used.
   @override
-  Future<Uint8List> getCode(EthAddress address, {EthBlockNum? atBlock}) async {
+  Future<Uint8List> getCode(EthAccount address, {EthBlockNum? atBlock}) async {
     final blockParam = _getBlockParam(atBlock);
     final hex = await _provider.request<String>(
       'eth_getCode',

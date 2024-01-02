@@ -14,7 +14,7 @@ class DeployedContract {
   final ContractAbi abi;
 
   /// The Ethereum address at which this contract is reachable.
-  final EthAddress address;
+  final EthAccount address;
 
   /// Get a list of all functions defined by the contract ABI.
   List<ContractFunction> get functions => abi.functions;

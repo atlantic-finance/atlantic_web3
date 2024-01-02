@@ -49,14 +49,14 @@ void main() {
         ),
         cumulativeGasUsed: BigInt.from(314463),
         blockNumber: const EthBlockNum.exact(24),
-        contractAddress: EthAddress.fromHex(
+        contractAddress: EthAccount.fromHex(
           '0x6671e02bb8bd3a234b13d79d1c285a9df657233d',
         ),
         status: true,
-        from: EthAddress.fromHex(
+        from: EthAccount.fromHex(
           '0xf8c59caf9bb8a7a2991160b592ac123108d88f7b',
         ),
-        to: EthAddress.fromHex(
+        to: EthAccount.fromHex(
           '0xf8c59caf9bb8a7a2991160b592ac123108d88f7b',
         ),
         gasUsed: BigInt.from(314463),
@@ -70,7 +70,7 @@ void main() {
             transactionHash:
                 '0xdf829c5a142f1fccd7d8216c5785ac562ff41e2dcfdf5785ac562ff41e2dcf',
             transactionIndex: 0,
-            address: EthAddress.fromHex(
+            address: EthAccount.fromHex(
               '0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d',
             ),
             data:

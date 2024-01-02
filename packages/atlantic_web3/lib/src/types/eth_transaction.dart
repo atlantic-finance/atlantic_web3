@@ -25,10 +25,10 @@ class EthTransaction {
   int? transactionIndex;
 
   /// The sender of this transaction.
-  final EthAddress? from;
+  final EthAccount? from;
 
   /// Address of the receiver. `null` when its a contract creation transaction
-  final EthAddress? to;
+  final EthAccount? to;
 
   /// The amount of Ether sent with this transaction.
   final EthAmount? value;
@@ -79,9 +79,9 @@ class EthTransaction {
         transactionIndex = json['transactionIndex'] != null
             ? int.parse(json['transactionIndex'] as String)
             : null,
-        from = EthAddress.fromHex(json['from'] as String),
+        from = EthAccount.fromHex(json['from'] as String),
         to = json['to'] != null
-            ? EthAddress.fromHex(json['to'] as String)
+            ? EthAccount.fromHex(json['to'] as String)
             : null,
         value = EthAmount.inWei(BigInt.parse(json['value'] as String)),
         gas = int.parse(json['gas'] as String),

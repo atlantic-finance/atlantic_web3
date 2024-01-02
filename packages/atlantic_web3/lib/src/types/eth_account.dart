@@ -5,15 +5,15 @@ import 'package:atlantic_web3/src/utils/equality.dart' as eq;
 import 'package:eip55/eip55.dart';
 
 /// Represents an Ethereum address.
-class EthAddress implements Comparable<EthAddress> {
+class EthAccount implements Comparable<EthAccount> {
   /// An ethereum address from the raw address bytes.
-  const EthAddress(this.addressBytes)
+  const EthAccount(this.addressBytes)
       : assert(addressBytes.length == addressByteLength);
 
   /// Constructs an Ethereum address from a public key. The address is formed by
   /// the last 20 bytes of the keccak hash of the public key.
-  factory EthAddress.fromPublicKey(Uint8List publicKey) {
-    return EthAddress(publicKeyToAddress(publicKey));
+  factory EthAccount.fromPublicKey(Uint8List publicKey) {
+    return EthAccount(publicKeyToAddress(publicKey));
   }
 
   /// Parses an Ethereum address from the hexadecimal representation. The
@@ -22,7 +22,7 @@ class EthAddress implements Comparable<EthAddress> {
   ///
   /// If [enforceEip55] is true or the address has both uppercase and lowercase
   /// chars, the address must be valid according to [EIP 55](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md).
-  factory EthAddress.fromHex(String hex, {bool enforceEip55 = false}) {
+  factory EthAccount.fromHex(String hex, {bool enforceEip55 = false}) {
     if (!_basicAddress.hasMatch(hex)) {
       throw ArgumentError.value(
         hex,
@@ -33,7 +33,7 @@ class EthAddress implements Comparable<EthAddress> {
 
     if (!enforceEip55 &&
         (hex.toUpperCase() == hex || hex.toLowerCase() == hex)) {
-      return EthAddress(hexToBytes(hex));
+      return EthAccount(hexToBytes(hex));
     }
 
     // Validates as of EIP 55, https://ethereum.stackexchange.com/a/1379
@@ -51,7 +51,7 @@ class EthAddress implements Comparable<EthAddress> {
       }
     }
 
-    return EthAddress(hexToBytes(hex));
+    return EthAccount(hexToBytes(hex));
   }
 
   static final RegExp _basicAddress =
@@ -87,7 +87,7 @@ class EthAddress implements Comparable<EthAddress> {
   @override
   bool operator ==(other) {
     return identical(this, other) ||
-        (other is EthAddress && eq.equals(addressBytes, other.addressBytes));
+        (other is EthAccount && eq.equals(addressBytes, other.addressBytes));
   }
 
   @override
@@ -96,7 +96,7 @@ class EthAddress implements Comparable<EthAddress> {
   }
 
   @override
-  int compareTo(EthAddress other) {
+  int compareTo(EthAccount other) {
     return hexNo0x.compareTo(other.hexNo0x);
   }
 }

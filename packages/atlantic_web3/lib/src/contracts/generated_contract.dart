@@ -34,7 +34,7 @@ abstract class GeneratedContract {
   }
 
   Future<String> write(
-    Credentials credentials,
+    Passkey credentials,
     EthTransaction2? base,
     ContractFunction function,
     List<dynamic> parameters,

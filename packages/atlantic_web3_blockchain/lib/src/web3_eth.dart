@@ -27,7 +27,7 @@ class Web3Eth implements IWeb3Blockchain {
   //         BaseProvider provider, ContractAbi abi, EthAddress address) =>
   //     Web3Contract(_provider, abi, address);
 
-  /// Constructs a new [Credentials] with the provided [privateKey] by using
+  /// Constructs a new [Passkey] with the provided [privateKey] by using
   /// an [EthPrivateKey].
   @override
   Future<EthPrivateKey> credentialsFromPrivateKey(String privateKey) {
@@ -63,8 +63,8 @@ class Web3Eth implements IWeb3Blockchain {
   @override
   @Deprecated('Deprecated estimateGas2() use estimateGas()')
   Future<BigInt> estimateGas2({
-    EthAddress? from,
-    EthAddress? to,
+    EthAccount? from,
+    EthAccount? to,
     EthAmount? value,
     BigInt? gas,
     EthAmount? gasPrice,
@@ -104,7 +104,7 @@ class Web3Eth implements IWeb3Blockchain {
   /// This function allows specifying a custom block mined in the past to get
   /// historical data. By default, [BlockNum.current] will be used.
   @override
-  Future<EthAmount> getBalance(EthAddress address,
+  Future<EthAmount> getBalance(EthAccount address,
       {EthBlockNum? atBlock}) async {
     final blockParam = _getBlockParam(atBlock);
     final data = await _provider.request<String>(
@@ -176,9 +176,9 @@ class Web3Eth implements IWeb3Blockchain {
    * ```
    */
   @override
-  Future<EthAddress> getCoinbase() async {
+  Future<EthAccount> getCoinbase() async {
     final hex = await _provider.request<String>('eth_coinbase');
-    return EthAddress.fromHex(hex);
+    return EthAccount.fromHex(hex);
   }
 
   /// Returns the amount of Ether typically needed to pay for one unit of gas.
@@ -247,7 +247,7 @@ class Web3Eth implements IWeb3Blockchain {
   /// historical data. By default, [BlockNum.current] will be used.
   @override
   Future<int> getTransactionCount(
-    EthAddress address, {
+    EthAccount address, {
     EthBlockNum? atBlock,
   }) {
     final blockParam = _getBlockParam(atBlock);
@@ -400,7 +400,7 @@ class Web3Eth implements IWeb3Blockchain {
   /// included in a mined block, can be used to obtain detailed information
   /// about the transaction.
   Future<String> sendTransaction(
-    Credentials cred,
+    Passkey cred,
     EthTransaction2 transaction, {
     int? chainId = 1,
     bool fetchChainIdFromNetworkId = false,
@@ -430,13 +430,13 @@ class Web3Eth implements IWeb3Blockchain {
   ///  - [bytesToHex], which can be used to get the more common hexadecimal
   /// representation of the transaction.
   Future<Uint8List> signTransaction(
-    Credentials cred,
+    Passkey cred,
     EthTransaction2 transaction, {
     int? chainId = 1,
     bool fetchChainIdFromNetworkId = false,
   }) async {
     final signingInput = await _fillMissingData(
-      credentials: cred as CredentialsWithKnownAddress,
+      credentials: cred as PasskeyWithKnownAccount,
       transaction: transaction,
       chainId: chainId,
       loadChainIdFromNetwork: fetchChainIdFromNetworkId,
@@ -493,7 +493,7 @@ class Web3Eth implements IWeb3Blockchain {
   }
 
   Future<_SigningInput> _fillMissingData({
-    required CredentialsWithKnownAddress credentials,
+    required PasskeyWithKnownAccount credentials,
     required EthTransaction2 transaction,
     int? chainId,
     bool loadChainIdFromNetwork = false,
@@ -505,7 +505,7 @@ class Web3Eth implements IWeb3Blockchain {
       );
     }
 
-    final sender = transaction.from ?? credentials.getEthAddress();
+    final sender = transaction.from ?? credentials.getEthAccount();
     var gasPrice = transaction.gasPrice;
 
     if (client == null &&
@@ -565,7 +565,7 @@ class Web3Eth implements IWeb3Blockchain {
 
   Uint8List _signTransaction(
     EthTransaction2 transaction,
-    Credentials c,
+    Passkey c,
     int? chainId,
   ) {
     if (transaction.isEIP1559 && chainId != null) {
@@ -674,7 +674,7 @@ class _SigningInput {
   });
 
   final EthTransaction2 transaction;
-  final Credentials credentials;
+  final Passkey credentials;
   final int? chainId;
 }
 

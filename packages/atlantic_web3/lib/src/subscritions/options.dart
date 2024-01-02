@@ -31,7 +31,7 @@ class FilterOptions {
   /// The optional address to limit this filter to. If not null, only logs
   /// emitted from the contract at [address] will be considered. Otherwise, all
   /// log events will be reported.
-  final EthAddress? address;
+  final EthAccount? address;
 
   /// The topics that must be present in the event to be included in this
   /// filter. The topics must be represented as a hexadecimal value prefixed

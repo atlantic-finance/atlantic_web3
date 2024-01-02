@@ -7,11 +7,11 @@ class EthTransaction2 {
   ///
   /// This can be set to null, in which case the client will use the address
   /// belonging to the credentials used to this transaction.
-  final EthAddress? from;
+  final EthAccount? from;
 
   /// The recipient of this transaction, or null for transactions that create a
   /// contract.
-  final EthAddress? to;
+  final EthAccount? to;
 
   /// How much ether to send to [to]. This can be null, as some transactions
   /// that call a contracts method won't have to send ether.
@@ -73,8 +73,8 @@ class EthTransaction2 {
         data = function.encodeCall(parameters);
 
   EthTransaction2 copyWith({
-    EthAddress? from,
-    EthAddress? to,
+    EthAccount? from,
+    EthAccount? to,
     int? maxGas,
     EthAmount? gasPrice,
     EthAmount? value,

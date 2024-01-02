@@ -4,10 +4,10 @@ import 'dart:typed_data';
 import 'package:atlantic_web3/atlantic_web3.dart';
 
 /// Anything that can sign payloads with a private key.
-abstract class Credentials {
+abstract class Passkey {
   static const _messagePrefix = '\u0019Ethereum Signed Message:\n';
 
-  /// Whether these [Credentials] are safe to be copied to another isolate and
+  /// Whether these [Passkey] are safe to be copied to another isolate and
   /// can operate there.
   /// If this getter returns true, the client might chose to perform the
   /// expensive signing operations on another isolate.
@@ -106,7 +106,7 @@ abstract class Credentials {
 }
 
 /// Credentials where the [address] is known synchronously.
-abstract class CredentialsWithKnownAddress extends Credentials {
+abstract class PasskeyWithKnownAccount extends Passkey {
   /// The ethereum address belonging to this credential.
   // @override
   // EthAddress get address;
@@ -116,7 +116,7 @@ abstract class CredentialsWithKnownAddress extends Credentials {
   // Future<EthAddress> extractAddress() async {
   //   return Future.value(address);
   // }
-  EthAddress getEthAddress();
+  EthAccount getEthAccount();
 
   EthPublicKey getEthPublicKey();
 
@@ -125,8 +125,8 @@ abstract class CredentialsWithKnownAddress extends Credentials {
   List<int> toBytes();
 }
 
-/// Interface for [Credentials] that don't sign transactions locally, for
+/// Interface for [Passkey] that don't sign transactions locally, for
 /// instance because the private key is not known to this library.
-abstract class CustomTransactionSender extends Credentials {
+abstract class CustomTransactionSender extends Passkey {
   Future<String> sendTransaction(EthTransaction2 transaction);
 }

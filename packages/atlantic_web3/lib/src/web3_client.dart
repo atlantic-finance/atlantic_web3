@@ -1,16 +1,5 @@
 import 'package:atlantic_web3/atlantic_web3.dart';
 
-/**
- * EN: Class for sending requests over an HTTP JSON-RPC API endpoint to Ethereum
- * clients. This library won't use the accounts feature of clients to use them
- * to create transactions, you will instead have to obtain private keys of
- * accounts yourself.
- *
- * ES: Clase para enviar solicitudes a través de un extremo de API HTTP JSON-RPC
- * a clientes de Ethereum. Esta biblioteca no usará la función de cuentas de los
- * clientes para usarlas para crear transacciones, sino que tendrá que obtener
- * las claves privadas de las cuentas usted mismo.
- */
 class Web3Client implements IWeb3Client {
   // Principal
   late final String _name;

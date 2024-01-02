@@ -17,11 +17,11 @@ class TransactionReceipt {
   final EthBlockNum blockNumber;
 
   /// Address of the sender.
-  final EthAddress? from;
+  final EthAccount? from;
 
   /// Address of the receiver or `null` if it was a contract creation
   /// transaction.
-  final EthAddress? to;
+  final EthAccount? to;
 
   /// The total amount of gas used when this transaction was executed in the
   /// block.
@@ -32,7 +32,7 @@ class TransactionReceipt {
 
   /// The address of the contract created if the transaction was a contract
   /// creation. `null` otherwise.
-  final EthAddress? contractAddress;
+  final EthAccount? contractAddress;
 
   /// Whether this transaction was executed successfully.
   final bool? status;
@@ -65,10 +65,10 @@ class TransactionReceipt {
             ? EthBlockNum.exact(int.parse(json['blockNumber'] as String))
             : const EthBlockNum.pending(),
         from = json['from'] != null
-            ? EthAddress.fromHex(json['from'] as String)
+            ? EthAccount.fromHex(json['from'] as String)
             : null,
         to = json['to'] != null
-            ? EthAddress.fromHex(json['to'] as String)
+            ? EthAccount.fromHex(json['to'] as String)
             : null,
         cumulativeGasUsed = hexToBigInt(json['cumulativeGasUsed'] as String),
         gasUsed = json['gasUsed'] != null
@@ -80,7 +80,7 @@ class TransactionReceipt {
               )
             : null,
         contractAddress = json['contractAddress'] != null
-            ? EthAddress.fromHex(json['contractAddress'] as String)
+            ? EthAccount.fromHex(json['contractAddress'] as String)
             : null,
         status = json['status'] != null
             ? (hexToInt(json['status'] as String) == 1)

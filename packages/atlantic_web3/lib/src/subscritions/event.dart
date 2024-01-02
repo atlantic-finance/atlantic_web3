@@ -31,7 +31,7 @@ class FilterEvent {
         blockNum = log['blockNumber'] != null
             ? hexToBigInt(log['blockNumber'] as String).toInt()
             : null,
-        address = EthAddress.fromHex(log['address'] as String),
+        address = EthAccount.fromHex(log['address'] as String),
         data = log['data'] as String?,
         topics = (log['topics'] as List?)?.cast<String>();
 
@@ -58,7 +58,7 @@ class FilterEvent {
   final int? blockNum;
 
   /// The address (of the smart contract) from which this log originated.
-  final EthAddress? address;
+  final EthAccount? address;
 
   /// The data blob of this log, hex-encoded.
   ///

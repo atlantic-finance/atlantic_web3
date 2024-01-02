@@ -94,11 +94,11 @@ class UintType extends _IntTypeBase {
 }
 
 /// Solidity address type
-class AddressType extends AbiType<EthAddress> {
+class AddressType extends AbiType<EthAccount> {
   /// Constructor.
   const AddressType();
 
-  static const _paddingLen = sizeUnitBytes - EthAddress.addressByteLength;
+  static const _paddingLen = sizeUnitBytes - EthAccount.addressByteLength;
 
   @override
   EncodingLengthInfo get encodingLength =>
@@ -108,19 +108,19 @@ class AddressType extends AbiType<EthAddress> {
   String get name => 'address';
 
   @override
-  void encode(EthAddress data, LengthTrackingByteSink buffer) {
+  void encode(EthAccount data, LengthTrackingByteSink buffer) {
     buffer
       ..add(Uint8List(_paddingLen))
       ..add(data.addressBytes);
   }
 
   @override
-  DecodingResult<EthAddress> decode(ByteBuffer buffer, int offset) {
+  DecodingResult<EthAccount> decode(ByteBuffer buffer, int offset) {
     final addressBytes = buffer.asUint8List(
       offset + _paddingLen,
-      EthAddress.addressByteLength,
+      EthAccount.addressByteLength,
     );
-    return DecodingResult(EthAddress(addressBytes), sizeUnitBytes);
+    return DecodingResult(EthAccount(addressBytes), sizeUnitBytes);
   }
 
   @override

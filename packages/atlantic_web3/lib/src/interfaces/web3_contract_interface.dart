@@ -7,7 +7,7 @@ abstract class IWeb3Contract {
 
   ContractAbi get abi;
 
-  EthAddress get address;
+  EthAccount get address;
 
   ContractEvent event(String name);
 
@@ -22,11 +22,11 @@ abstract class IWeb3Contract {
   });
 
   Future<String> callRaw({
-    EthAddress? from,
-    required EthAddress to,
+    EthAccount? from,
+    required EthAccount to,
     required Uint8List data,
     EthBlockNum? atBlock,
   });
 
-  Future<Uint8List> getCode(EthAddress address, {EthBlockNum? atBlock});
+  Future<Uint8List> getCode(EthAccount address, {EthBlockNum? atBlock});
 }

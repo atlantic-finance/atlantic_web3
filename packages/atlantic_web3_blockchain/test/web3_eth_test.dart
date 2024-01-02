@@ -22,8 +22,8 @@ void main() {
   //echo
   test('estimateGas', () async {
     final transaction = EthTransaction(
-      from: EthAddress.fromHex('0xb33b6d5ffe542e87a760ae61e28ce6358da799fc'),
-      to: EthAddress.fromHex('0xcEeC807Ec44F5282f8c86eA1ddb845Ca2CCa4294'),
+      from: EthAccount.fromHex('0xb33b6d5ffe542e87a760ae61e28ce6358da799fc'),
+      to: EthAccount.fromHex('0xcEeC807Ec44F5282f8c86eA1ddb845Ca2CCa4294'),
       value: EthAmount.fromInt(EthUnit.ether, 3),
       gas: 25000,
       gasPrice: EthAmount.fromInt(EthUnit.wei, 1),
@@ -50,7 +50,7 @@ void main() {
   //echo
   test('getBalance', () async {
     final address =
-        EthAddress.fromHex('0xb33b6d5ffe542e87a760ae61e28ce6358da799fc');
+        EthAccount.fromHex('0xb33b6d5ffe542e87a760ae61e28ce6358da799fc');
 
     final result = await web3.getBalance(address);
     print(result);
@@ -174,7 +174,7 @@ void main() {
   //echo
   test('getTransactionCount', () async {
     final address =
-        EthAddress.fromHex('0xb33b6d5ffe542e87a760ae61e28ce6358da799fc');
+        EthAccount.fromHex('0xb33b6d5ffe542e87a760ae61e28ce6358da799fc');
 
     final result = await web3.getTransactionCount(address);
 

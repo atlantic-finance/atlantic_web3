@@ -6,7 +6,7 @@ import 'package:atlantic_web3/src/utils/equality.dart' as eq;
 
 
 /// Credenciales que pueden firmar cargas útiles con una clave privada de Ethereum.
-final class EthPrivateKey extends CredentialsWithKnownAddress {
+final class EthPrivateKey extends PasskeyWithKnownAccount {
   /// Creates a private key from a byte array representation.
   ///
   /// The bytes are interpreted as an unsigned integer forming the private key.
@@ -32,8 +32,8 @@ final class EthPrivateKey extends CredentialsWithKnownAddress {
   final bool isolateSafe = true;
 
   @override
-  EthAddress getEthAddress() {
-    return EthAddress(publicKeyToAddress(privateKeyToPublic(privateKeyInt)));
+  EthAccount getEthAccount() {
+    return EthAccount(publicKeyToAddress(privateKeyToPublic(privateKeyInt)));
   }
 
   @override

@@ -23,7 +23,7 @@ void main() {
 
     // In either way, the library can derive the public key and the address
     // from a private key:
-    EthAddress address2 = credentials2.getEthAddress();
+    EthAccount address2 = credentials2.getEthAccount();
 
     print('Ethereum address: ${address2.hex}');
     print("\n");
@@ -59,7 +59,7 @@ void main() {
 
     // In either way, the library can derive the public key and the address
     // from a private key:
-    final EthAddress address1 = privatekey.getEthAddress();
+    final EthAccount address1 = privatekey.getEthAccount();
 
     print('Ethereum address: ${address1.hex}');
     print('\n');
@@ -86,7 +86,7 @@ void main() {
 
     // In either way, the library can derive the public key and the address
     // from a private key:
-    final EthAddress address2 = privatekey.getEthAddress();
+    final EthAccount address2 = privatekey.getEthAccount();
 
     print('Ethereum address: ${address2.hex}');
     print('\n');
@@ -115,7 +115,7 @@ void main() {
 
     // In either way, the library can derive the public key and the address
     // from a private key:
-    final EthAddress address3 = privatekey.getEthAddress();
+    final EthAccount address3 = privatekey.getEthAccount();
 
     print('Ethereum address: ${address3.hex}');
     print('\n');
@@ -159,7 +159,7 @@ void main() {
 
     // In either way, the library can derive the public key and the address
     // from a private key:
-    final EthAddress address4 = privatekey.getEthAddress();
+    final EthAccount address4 = privatekey.getEthAccount();
 
     print('Ethereum address: ${address4.hex}');
     print('\n');

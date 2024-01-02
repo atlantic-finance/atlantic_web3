@@ -151,8 +151,8 @@ void main() {
       final credentials =
           EthPrivateKey.fromHex(strip0x(tx['privateKey'] as String));
       final transaction = EthTransaction2(
-        from: credentials.getEthAddress(),
-        to: EthAddress.fromHex(tx['to'] as String),
+        from: credentials.getEthAccount(),
+        to: EthAccount.fromHex(tx['to'] as String),
         nonce: tx['nonce'] as int,
         gas: tx['gasLimit'] as int,
         value: EthAmount.inWei(BigInt.from(tx['value'] as int)),
@@ -186,8 +186,8 @@ void main() {
       'a2fd51b96dc55aeb14b30d55a6b3121c7b9c599500c1beb92a389c3377adc86e',
     );
     final transaction = EthTransaction2(
-      from: credentials.getEthAddress(),
-      to: EthAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
+      from: credentials.getEthAccount(),
+      to: EthAccount.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
       nonce: 0,
       gasPrice: EthAmount.inWei(BigInt.one),
       gas: 10,
@@ -213,7 +213,7 @@ void main() {
       nonce: 9,
       gasPrice: EthAmount.inWei(BigInt.from(20000000000)),
       gas: 21000,
-      to: EthAddress.fromHex('0x3535353535353535353535353535353535353535'),
+      to: EthAccount.fromHex('0x3535353535353535353535353535353535353535'),
       value: EthAmount.inWei(BigInt.from(1000000000000000000)),
     );
 
