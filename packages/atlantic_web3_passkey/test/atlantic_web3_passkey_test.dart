@@ -1,170 +1,84 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_passkey/atlantic_web3_passkey.dart';
-import 'package:bip32/bip32.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hex/hex.dart';
+import 'package:pointycastle/export.dart';
+
+import 'helpers/sample_keys.dart';
+
+
 
 void main() {
   late IWeb3Passkey web3;
+  late File tempDir;
 
-  setUp(() => {
-    web3 = Web3Passkey.instance()
+  setUp(() {
+    web3 = Web3Passkey.instance();
+    tempDir = File('');
   });
 
-  test('Web3Passkey.HMAC-SHA512()', () async {
-    var example =
-        '942965054c6d9cc467c63feb55758bb4a5e44472bc8460209eb9b5d001bd02d6';
-    print("HMAC digest as hex string: $example");
-    print("HMAC digest string length: ${example.toString().length}");
-
-    EthPrivateKey credentials2 = EthPrivateKey.fromHex(example);
-
-    // In either way, the library can derive the public key and the address
-    // from a private key:
-    EthAccount address2 = credentials2.getEthAccount();
-
-    print('Ethereum address: ${address2.hex}');
-    print("\n");
-
-    final bytes = HEX.decode(example);
-
-    BIP32 node = BIP32.fromSeed(Uint8List.fromList(bytes));
-
-    BIP32 derivateNode = node.derivePath("m/44'/60'/0'/0/0");
-
-    String privateKey = HEX.encode(derivateNode.privateKey!).toString();
-    print(privateKey);
-    print(privateKey.length);
-  });
-
-  test('Web3Passkey.mnemonic() 01', () async {
-    print("###############################################");
-    print(" Ejemplo 01: Generar mnemonic de manera aleatoria");
-    print("###############################################");
-    print('\n');
-
-    // Crear palabras
-    final Mnemonic mnemonic = web3.generateMnemonic() as Mnemonic;
-    print('Mnemonic: ${mnemonic.getWords()}');
-    print('\n');
-
-    // Crear private key
-    final EthPrivateKey privatekey = web3.createPrivateKey(mnemonic);
-    print("HMAC digest as bytes: ${privatekey.toBytes()}");
-    print("HMAC digest as hex string: ${privatekey.toHex()}");
-    print("HMAC digest string length: ${privatekey.toHex().length}");
-    print('\n');
-
-    // In either way, the library can derive the public key and the address
-    // from a private key:
-    final EthAccount address1 = privatekey.getEthAccount();
-
-    print('Ethereum address: ${address1.hex}');
-    print('\n');
-
-    print('Test passed !!!');
-  });
-  test('Web3Passkey.mnemonic() 02', () async {
-    print("###############################################");
-    print(" Ejemplo 02: Generar mnemonic de manera aleatoria con longitud 24");
-    print("###############################################");
-    print('\n');
-
-    // Max entropy = 256
-    final Mnemonic mnemonic = web3.generateMnemonic(length: 24, language: Language.spanish) as Mnemonic;
-    print('Mnemonic: ${mnemonic.getWords()}');
-    print('\n');
-
-    // Crear private key
-    final EthPrivateKey privatekey = web3.createPrivateKey(mnemonic);
-    print("HMAC digest as bytes: ${privatekey.toBytes()}");
-    print("HMAC digest as hex string: ${privatekey.toHex()}");
-    print("HMAC digest string length: ${privatekey.toHex().length}");
-    print('\n');
-
-    // In either way, the library can derive the public key and the address
-    // from a private key:
-    final EthAccount address2 = privatekey.getEthAccount();
-
-    print('Ethereum address: ${address2.hex}');
-    print('\n');
-
-    print('Test passed !!!');
-  });
-  test('Web3Passkey.mnemonic() 03', () async {
-    print("###############################################");
-    print(" Ejemplo 03: Generar mnemonic desde una cadena de texto");
-    print("###############################################");
-    print('\n');
-
-    // Mnemonic from string
-    const str =
-        'vivid lab sport destroy erosion can bonus genius fire birth message term';
-    final Mnemonic mnemonic = Mnemonic.fromString(str);
-    print('Mnemonic: ${mnemonic.getWords()}');
-    print('\n');
-
-    // Crear private key
-    final EthPrivateKey privatekey = web3.createPrivateKey(mnemonic);
-    print("HMAC digest as bytes: ${privatekey.toBytes()}");
-    print("HMAC digest as hex string: ${privatekey.toHex()}");
-    print("HMAC digest string length: ${privatekey.toHex().length}");
-    print('\n');
-
-    // In either way, the library can derive the public key and the address
-    // from a private key:
-    final EthAccount address3 = privatekey.getEthAccount();
-
-    print('Ethereum address: ${address3.hex}');
-    print('\n');
-
-    print('Test passed !!!');
-  });
-  test('Web3Passkey.mnemonic() 04', () async {
-    print("###############################################");
-    print(" Ejemplo 04: Generar mnemonic desde una lista de palabras");
-    print("###############################################");
-    print('\n');
-
-    // Especially mnemonic
-    final words = [
-      'vivid',
-      'lab',
-      'sport',
-      'destroy',
-      'erosion',
-      'can',
-      'bonus',
-      'genius',
-      'fire',
-      'birth',
-      'message',
-      'term'
+  test('Web3Passkey.Pbkdf2()', () async {
+    const _words = [
+      'acquire',
+      'net',
+      'news',
+      'liar',
+      'twice',
+      'snap',
+      'game',
+      'pattern',
+      'empty',
+      'foster',
+      'age',
+      'toe'
     ];
-    final Mnemonic mnemonic = Mnemonic.from(words);
-    print('Mnemonic: ${mnemonic.getWords()}');
-    print('\n');
 
-    // Crear clave semilla
-    final EthSeedPrivateKey seed = web3.createDerivatePrivateKey(mnemonic, "m/44'/60'/0'/0/0") as EthSeedPrivateKey;
+    const passPhrase = "";
 
-    // Crear private key
-    final EthPrivateKey privatekey = seed.toPrivateKey();
-    print("HMAC digest as bytes: ${privatekey.toBytes()}");
-    print("HMAC digest as hex string: ${privatekey.toHex()}");
-    print("HMAC digest string length: ${privatekey.toHex().length}");
-    print('\n');
+    final buffer = StringBuffer();
+    for (var i = 0; i < _words.length; i++) {
+      buffer.write(_words.elementAt(i));
+      if (i < _words.length - 1) {
+        buffer.write(' ');
+      }
+    }
 
-    // In either way, the library can derive the public key and the address
-    // from a private key:
-    final EthAccount address4 = privatekey.getEthAccount();
+    const slat = "mnemonic${passPhrase}";
 
-    print('Ethereum address: ${address4.hex}');
+    // Codificar a UTF8
+    final List<int> utf8Key = utf8.encode(buffer.toString().trim());
+    final List<int> utf8Slat = utf8.encode(slat.trim());
+
+    final PBKDF2KeyDerivator derivator = PBKDF2KeyDerivator(HMac(SHA512Digest(), 128));
+    derivator.init(Pbkdf2Parameters(utf8Slat as Uint8List, 2048, 64));
+
+    final key = derivator.process(utf8Key as Uint8List);
+
+    final EthPrivateKey result = EthPrivateKey.fromHex(HEX.encode(key).toString());
+
+    print('Resultado: ');
+    print('Clave privada esperada: 0x6ebd8ad6d4dca011cc43971d4b732137214595f42e3905b68bdc6d9e2d8a3405');
+    print('Clave privada obtenida: 0x${result.hex}');
+
+    final EthAccount account = result.getEthAccount();
+
+    print('Cuenta ethereum esperada: 0xb9c25bF81F4d851E44c2C89965a9BB98D61D6496');
+    print('Cuenta ethereum obtenida: ${account.hex}');
     print('\n');
 
     print('Test passed !!!');
   });
+
+  test('Web3Passkey.createBip39Wallet()', () async {
+    IBip39Wallet wallet = web3.createBip39Wallet(PASSWORD,  tempDir);
+
+
+    print('Test passed !!!');
+  });
+
 }
 

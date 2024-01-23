@@ -23,6 +23,7 @@ dependencies:
   async: ^2.10.0
   wallet: ^0.0.10
   web_socket_channel: ^2.2.0
+  sprintf: ^7.0.0
 
 
 dev_dependencies:

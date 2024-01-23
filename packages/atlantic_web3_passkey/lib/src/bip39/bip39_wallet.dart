@@ -1,0 +1,3 @@
+class Bip39Wallet {
+
+}

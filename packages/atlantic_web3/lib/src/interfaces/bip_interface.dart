@@ -5,10 +5,14 @@ abstract interface class IBIP39 {
   StringBuffer getStringBuffer();
 }
 
-abstract class IBIP32 {
+abstract interface class IBIP32 {
   String toHex();
 
   List<int> toBytes();
 
   EthPrivateKey toPrivateKey();
+}
+
+abstract interface class IBip39Wallet {
+
 }

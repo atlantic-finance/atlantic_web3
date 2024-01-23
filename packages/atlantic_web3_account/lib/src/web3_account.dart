@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3/atlantic_web3.dart' as rlp;
+import 'package:atlantic_web3/atlantic_web3.dart';
 
 class Web3Account implements IWeb3Account {
   static const EthBlockNum _defaultBlock = EthBlockNum.current();
@@ -194,10 +194,7 @@ class Web3Account implements IWeb3Account {
   /// This function allows specifying a custom block mined in the past to get
   /// historical data. By default, [BlockNum.current] will be used.
   @override
-  Future<int> getTransactionCount(
-      EthAccount address, {
-        EthBlockNum? atBlock,
-      }) {
+  Future<int> getTransactionCount(EthAccount address, {EthBlockNum? atBlock}) {
     final blockParam = _getBlockParam(atBlock);
 
     return _provider.request<String>(
