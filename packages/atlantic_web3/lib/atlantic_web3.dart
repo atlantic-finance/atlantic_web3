@@ -12,7 +12,6 @@ export 'src/abi/types/types.dart';
 export 'src/contracts/deployed_contract.dart';
 export 'src/contracts/generated_contract.dart'; //
 export 'src/credentials/credentials.dart';
-export 'src/credentials/wallet.dart'; //
 export 'src/crypto/formatting.dart';
 export 'src/crypto/keccak.dart';
 export 'src/crypto/random_bridge.dart';

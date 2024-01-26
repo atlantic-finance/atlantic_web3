@@ -6,6 +6,5 @@ export 'src/bip39/bip39.dart';
 export 'src/bip39/bip39_wallet.dart';
 export 'src/bip39/mnemonic.dart';
 export 'src/bip39/pbkdf2.dart';
-export 'src/bip44/bip44.dart';
 export 'src/helpers/uint8list_extensions.dart';
 export 'src/web3_passkey.dart';

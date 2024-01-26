@@ -20,12 +20,10 @@ class Web3Passkey implements IWeb3Passkey {
 
   late final Bip32 bip32;
   late final Bip39 bip39;
-  late final Bip44 bip44;
 
   Web3Passkey._() {
     bip32 = Bip32();
     bip39 = Bip39();
-    bip44 = Bip44();
   }
 
   @override

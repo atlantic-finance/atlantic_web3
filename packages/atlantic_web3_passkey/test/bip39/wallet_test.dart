@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
+import 'package:atlantic_web3_passkey/src/bip39/models/wallet.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'data/example_keystores.dart' as data;
+import '../helpers/example_keystores.dart' as data;
 
 void main() {
   final wallets = json.decode(data.content) as Map;
