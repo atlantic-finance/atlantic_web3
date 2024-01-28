@@ -26,6 +26,22 @@ class Web3Passkey implements IWeb3Passkey {
     bip39 = Bip39();
   }
 
+  /// Permite generar frases mnemonic dependiendo el lenguaje y longitud, tambien
+  /// debe tomar en cuenta el id del dispositivo para usarlo como una entropy inicial
+  /// para que sea de manera unica y aleatoria. La longitud de la frases se de determina
+  /// por la siguiente tabla:
+  ///
+  /// ---------------------------------
+  /// | words length | entropy length |
+  /// ---------------------------------
+  /// | 12           | 128            |
+  /// | 15           | 160            |
+  /// | 18           | 192            |
+  /// | 21           | 224            |
+  /// | 24           | 256            |
+  /// ---------------------------------
+  /// mas informacion <a href="https://github.com/leonardocustodio/polkadart/blob/main/packages/substrate_bip39/lib/crypto_scheme.dart">aqui</a>
+  ///
   @override
   Mnemonic generateMnemonic({int length = 12, Language language = Language.english}) {
     final List<String> words = bip39.generateWordsRandomly(length, language);
