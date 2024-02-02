@@ -21,7 +21,7 @@ void main() {
     print('\n');
 
     // Crear private key
-    final EthPrivateKey privatekey = web3.createPrivateKey(mnemonic);
+    final EthPassKey privatekey = web3.createEthPassKey(mnemonic, '');
     print("HMAC digest as bytes: ${privatekey.toBytes()}");
     print("HMAC digest as hex string: ${privatekey.toHex()}");
     print("HMAC digest string length: ${privatekey.toHex().length}");
@@ -48,7 +48,7 @@ void main() {
     print('\n');
 
     // Crear private key
-    final EthPrivateKey privatekey = web3.createPrivateKey(mnemonic);
+    final EthPassKey privatekey = web3.createEthPassKey(mnemonic, '');
     print("HMAC digest as bytes: ${privatekey.toBytes()}");
     print("HMAC digest as hex string: ${privatekey.toHex()}");
     print("HMAC digest string length: ${privatekey.toHex().length}");
@@ -77,7 +77,7 @@ void main() {
     print('\n');
 
     // Crear private key
-    final EthPrivateKey privatekey = web3.createPrivateKey(mnemonic);
+    final EthPassKey privatekey = web3.createEthPassKey(mnemonic, '');
     print("HMAC digest as bytes: ${privatekey.toBytes()}");
     print("HMAC digest as hex string: ${privatekey.toHex()}");
     print("HMAC digest string length: ${privatekey.toHex().length}");
@@ -118,10 +118,10 @@ void main() {
     print('\n');
 
     // Crear clave semilla
-    final EthSeedPrivateKey seed = web3.createDerivatePrivateKey(mnemonic, "m/44'/60'/0'/0/0") as EthSeedPrivateKey;
+    final EthBip32PassKey seed = web3.createDerivateEthPassKey(mnemonic, "m/44'/60'/0'/0/0") as EthBip32PassKey;
 
     // Crear private key
-    final EthPrivateKey privatekey = seed.toPrivateKey();
+    final EthPassKey privatekey = seed.toMainPassKey();
     print("HMAC digest as bytes: ${privatekey.toBytes()}");
     print("HMAC digest as hex string: ${privatekey.toHex()}");
     print("HMAC digest string length: ${privatekey.toHex().length}");

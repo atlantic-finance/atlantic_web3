@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:pointycastle/ecc/api.dart' show ECPoint;
 
-class EthPublicKey {
+final class EthPublicKey {
   final BigInt privateKeyInt;
   final Uint8List privateKey;
 

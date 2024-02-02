@@ -7,7 +7,7 @@ abstract interface class IWeb3Blockchain {
   // IWeb3Contract contract(
   //     BaseProvider provider, ContractAbi abi, EthAddress address);
 
-  Future<EthPrivateKey> credentialsFromPrivateKey(String privateKey);
+  Future<EthPassKey> credentialsFromPrivateKey(String privateKey);
 
   Future<BigInt> estimateGas(EthTransaction transaction);
 

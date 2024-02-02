@@ -8,7 +8,7 @@ import 'package:atlantic_web3_passkey/src/bip39/words/word_list_en.dart';
 import 'package:atlantic_web3_passkey/src/bip39/words/word_list_es.dart';
 import 'package:crypto/crypto.dart';
 
-final class Bip39 {
+final class EthBip39Generator implements IBIP39 {
 
   /// Formula
   /// ENT = 128

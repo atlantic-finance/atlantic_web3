@@ -107,18 +107,11 @@ abstract class Passkey {
 
 /// Credentials where the [address] is known synchronously.
 abstract class PasskeyWithKnownAccount extends Passkey {
-  /// The ethereum address belonging to this credential.
-  // @override
-  // EthAddress get address;
-  //
-  // @Deprecated('Please use [address]')
-  // @override
-  // Future<EthAddress> extractAddress() async {
-  //   return Future.value(address);
-  // }
   EthAccount getEthAccount();
 
   EthPublicKey getEthPublicKey();
+
+  EthPrivateKey getEthPrivateKey();
 
   String toHex();
 

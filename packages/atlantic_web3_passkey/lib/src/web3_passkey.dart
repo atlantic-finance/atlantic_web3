@@ -1,11 +1,9 @@
 
-import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_passkey/atlantic_web3_passkey.dart';
-import 'package:crypto/crypto.dart';
 
 class Web3Passkey implements IWeb3Passkey {
   // Instancia privada
@@ -18,12 +16,10 @@ class Web3Passkey implements IWeb3Passkey {
     return _instance!;
   }
 
-  late final Bip32 bip32;
-  late final Bip39 bip39;
+  late final EthBip39Generator bip39;
 
   Web3Passkey._() {
-    bip32 = Bip32();
-    bip39 = Bip39();
+    bip39 = EthBip39Generator();
   }
 
   /// Permite generar frases mnemonic dependiendo el lenguaje y longitud, tambien
@@ -52,42 +48,31 @@ class Web3Passkey implements IWeb3Passkey {
   }
 
   @override
-  EthPrivateKey createPrivateKey(IBIP39 nnemonic) {
-    final buffer = nnemonic.getStringBuffer();
+  EthPassKey createEthPassKey(IMnemonic mnemonic, String passphrase) {
+    // Semilla
+    final List<int> seed = Pbkdf2Helpers.createSeedFromMnemonic(mnemonic, passphrase);
 
-    // Codificar a UTF8
-    final List<int> utf8Key = utf8.encode(buffer.toString().trim());
-    final List<int> utf8Passphrase = utf8.encode("mnemonic");
+    // Encapsular claves publica y privada
+    final ECKeyPair keyPair = ECKeyPair.create(seed);
 
-    // Encriptar en HMAC-sha512
-    final Hmac hmacsha512 = Hmac(sha512, utf8Key);
-    final Digest digest = hmacsha512.convert(utf8Passphrase);
-
-    // Encapsular clave privada
-    return EthPrivateKey.fromHex(digest.toString());
+    // Crear llave de accesos usando las claves
+    return EthPassKey.fromKeyPair(keyPair);
   }
 
   @override
-  EthSeedPrivateKey createDerivatePrivateKey(IBIP39 nnemonic, String passphrase) {
-    final buffer = nnemonic.getStringBuffer();
+  EthBip32PassKey createDerivateEthPassKey(IMnemonic mnemonic, String passphrase) {
+    // Semilla
+    final List<int> seed = Pbkdf2Helpers.createSeedFromMnemonic(mnemonic, passphrase);
 
-    final slat = "mnemonic${passphrase}";
+    // Encapsular claves publica y privada
+    final ECKeyPair keyPair = ECKeyPair.create(seed);
 
-    // Codificar a UTF8
-    final List<int> utf8Key = utf8.encode(buffer.toString().trim());
-    final List<int> utf8Passphrase = utf8.encode(slat);
-
-    // Encriptar en HMAC-sha512
-    final Hmac hmacsha512 = Hmac(sha256, utf8Key);
-    final Digest digest = hmacsha512.convert(utf8Passphrase);
-
-
-    // Encapsular clave privada
-    return EthSeedPrivateKey(digest);
+    // Crear derivador de llaves de accesos usando las claves
+    return EthBip32PassKey.fromKeyPair(keyPair);
   }
 
   @override
-  EthPrivateKey getDefaultEthPrivateKey() {
+  EthPassKey getDefaultEthPrivateKey() {
     // TODO: implement getDefaultEthPrivateKey
     throw UnimplementedError();
   }

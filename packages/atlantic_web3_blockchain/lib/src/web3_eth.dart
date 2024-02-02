@@ -28,10 +28,10 @@ class Web3Eth implements IWeb3Blockchain {
   //     Web3Contract(_provider, abi, address);
 
   /// Constructs a new [Passkey] with the provided [privateKey] by using
-  /// an [EthPrivateKey].
+  /// an [EthPassKey].
   @override
-  Future<EthPrivateKey> credentialsFromPrivateKey(String privateKey) {
-    return Future.value(EthPrivateKey.fromHex(privateKey));
+  Future<EthPassKey> credentialsFromPrivateKey(String privateKey) {
+    return Future.value(EthPassKey.fromHex(privateKey));
   }
 
   /// Estimate the amount of gas that would be necessary if the transaction was

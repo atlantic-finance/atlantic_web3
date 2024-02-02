@@ -1,8 +1,12 @@
 import 'package:atlantic_web3/atlantic_web3.dart';
 
-abstract interface class IBIP39 {
+abstract interface class IMnemonic {
   List<String> getWords();
   StringBuffer getStringBuffer();
+}
+
+abstract interface class IBIP39 {
+  List<String> generateWordsRandomly(int length, Language language);
 }
 
 abstract interface class IBIP32 {
@@ -10,7 +14,7 @@ abstract interface class IBIP32 {
 
   List<int> toBytes();
 
-  EthPrivateKey toPrivateKey();
+  EthPassKey toMainPassKey();
 }
 
 abstract interface class IBip39Wallet {

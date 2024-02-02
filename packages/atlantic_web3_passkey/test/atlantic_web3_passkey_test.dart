@@ -58,7 +58,7 @@ void main() {
 
     final key = derivator.process(utf8Key as Uint8List);
 
-    final EthPrivateKey result = EthPrivateKey.fromHex(HEX.encode(key).toString());
+    final EthPassKey result = EthPassKey.fromHex(HEX.encode(key).toString());
 
     print('Resultado: ');
     print('Clave privada esperada: 0x6ebd8ad6d4dca011cc43971d4b732137214595f42e3905b68bdc6d9e2d8a3405');

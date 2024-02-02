@@ -1,6 +1,6 @@
 import 'package:atlantic_web3/atlantic_web3.dart';
 
-class Mnemonic implements IBIP39 {
+class Mnemonic implements IMnemonic {
   late List<String> _words;
 
   // ignore: unused_element

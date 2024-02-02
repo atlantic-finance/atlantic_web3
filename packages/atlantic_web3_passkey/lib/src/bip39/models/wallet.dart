@@ -97,7 +97,7 @@ class Wallet {
   /// You can configure the parameter N of the scrypt algorithm if you need to.
   /// The default value for [scryptN] is 8192. Be aware that this N must be a
   /// power of two.
-  factory Wallet.createNew(EthPrivateKey credentials, String password, Random random,
+  factory Wallet.createNew(EthPassKey credentials, String password, Random random,
       {int scryptN = 8192, int p = 1,}) {
 
     //
@@ -209,7 +209,7 @@ class Wallet {
     final aes = _initCipher(false, aesKey, iv);
 
     final privateKey = aes.process(Uint8List.fromList(encryptedPrivateKey));
-    final credentials = EthPrivateKey(bytesToHex(privateKey), privateKey);
+    final credentials = EthPassKey(bytesToHex(privateKey), privateKey);
 
     final id = parseUuid(data['id'] as String);
 
@@ -217,7 +217,7 @@ class Wallet {
   }
 
   /// The credentials stored in this wallet file
-  final EthPrivateKey privateKey;
+  final EthPassKey privateKey;
 
   /// The key derivator used to obtain the aes decryption key from the password
   final _KeyDerivator _derivator;
