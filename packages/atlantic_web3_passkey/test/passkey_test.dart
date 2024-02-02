@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_passkey/atlantic_web3_passkey.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hex/hex.dart';
-import 'package:pointycastle/export.dart';
 
 import 'helpers/sample_keys.dart';
 
@@ -14,12 +12,29 @@ import 'helpers/sample_keys.dart';
 
 void main() {
   late IWeb3Passkey web3;
-  late File tempDir;
 
   setUp(() {
     web3 = Web3Passkey.instance();
-    tempDir = File('');
   });
+
+  test('Web3Passkey.createEthPassKey()', () async {
+    final Mnemonic mnemonic = Mnemonic.fromString(MNEMONIC);
+
+    final EthPassKey passKey = web3.createEthPassKey(mnemonic, PASSWORD);
+
+
+    final EthPrivateKey privateKey = passKey.getEthPrivateKey();
+
+
+    final EthPublicKey publicKey = passKey.getEthPublicKey();
+
+
+    final EthAccount account = passKey.getEthAccount();
+
+
+    print('Test passed !!!');
+  });
+
 
   test('Web3Passkey.Pbkdf2()', () async {
     const _words = [
@@ -73,12 +88,6 @@ void main() {
     print('Test passed !!!');
   });
 
-  test('Web3Passkey.createBip39Wallet()', () async {
-    IBip39Wallet wallet = web3.createBip39Wallet(PASSWORD,  tempDir);
-
-
-    print('Test passed !!!');
-  });
 
 }
 

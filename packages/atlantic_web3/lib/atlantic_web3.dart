@@ -1,5 +1,8 @@
 library atlantic_web3;
 
+export 'package:convert/convert.dart';
+export 'package:pointycastle/export.dart';
+
 export 'src/abi/abi.dart';
 export 'src/abi/parameters/parameters.dart';
 export 'src/abi/parse_abi.dart';

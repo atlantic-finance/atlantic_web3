@@ -11,6 +11,9 @@ dart pub global activate melos
 # instalar dependencias en todos los proyectos
 melos run get --no-select
 
+# supervisar dependencias en todos los proyectos
+melos run outdated --no-select;
+
 # formatear todos los proyectos
 melos run format --no-select
 

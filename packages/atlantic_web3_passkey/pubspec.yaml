@@ -4,7 +4,7 @@ version: 0.0.1
 homepage: http://atlantic.lat
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.2.0 <4.0.0"
   flutter: '>=3.10.0'
 
 dependencies:
@@ -14,6 +14,7 @@ dependencies:
   #atlantic web3
   atlantic_web3:
     path: ../atlantic_web3
+
   #providers
   web3_providers_http:
     path: ../web3_providers_http
@@ -22,21 +23,10 @@ dependencies:
   web3_providers_ws:
     path: ../web3_providers_ws
 
-  # para encriptar
-  crypto: ^3.0.2
-  convert: ^3.1.1
-  hex: ^0.2.0
-
-  pointycastle: ^3.0.1
-  device_info_plus: ^8.2.0
-
   #para guardar el passkey
   sqlite3: ^2.3.0
   encrypt: ^5.0.3
-
-
-
-
+  device_info_plus: ^8.2.0
 
 
 
