@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
+import 'package:pointycastle/export.dart';
 import 'package:pointycastle/key_derivators/pbkdf2.dart' as pbkdf2;
 import 'package:pointycastle/key_derivators/scrypt.dart' as scrypt;
 

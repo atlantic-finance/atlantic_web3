@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_passkey/atlantic_web3_passkey.dart';
+import 'package:pointycastle/export.dart';
 
 class Web3Passkey implements IWeb3Passkey {
   // Instancia privada

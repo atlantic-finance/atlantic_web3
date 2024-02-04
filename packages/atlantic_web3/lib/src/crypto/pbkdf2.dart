@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
+import 'package:pointycastle/export.dart';
 import "package:unorm_dart/unorm_dart.dart";
 
 final class Pbkdf2 {
