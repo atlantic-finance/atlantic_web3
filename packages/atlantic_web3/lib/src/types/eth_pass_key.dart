@@ -7,43 +7,33 @@ import 'package:atlantic_web3/src/utils/equality.dart' as eq;
 
 /// Credenciales que pueden firmar cargas útiles con una clave privada de Ethereum.
 final class EthPassKey extends PasskeyWithKnownAccount {
-  /// Creates a private key from a byte array representation.
-  ///
-  /// The bytes are interpreted as an unsigned integer forming the private key.
-  EthPassKey(this.hex, this.privateKey)
-      : privateKeyInt = bytesToUnsignedInt(privateKey);
 
-  /// Parses a private key from a hexadecimal representation.
-  EthPassKey.fromHex(String hex) : this(hex, hexToBytes(hex));
+  EthPassKey.fromInt(BigInt keyInt) : this.fromBytes(unsignedIntToBytes(keyInt));
 
-  EthPassKey.fromKeyPair(ECKeyPair keyPair) {
-    privateKeyInt = 0 as BigInt;
-    privateKey = [] as Uint8List;
-    hex = '';
-  }
-  /// Creates a private key from the underlying number.
-  // EthPrivateKey.fromInt(this.privateKeyInt) {
-  //   this.privateKey = unsignedIntToBytes(privateKeyInt);
-  //   this.hex = bytesToHex(privateKey as List<int>);
-  // }
+  EthPassKey.fromHex(String hex) : this.fromBytes(hexToBytes(hex));
+
+  EthPassKey.fromBytes(Uint8List bytes) : this.fromKeyPair(ECKeyPair.create(bytes));
+
+  EthPassKey.fromKeyPair(this._keyPair);
 
 
   /// ECC's d private parameter.
-  late final BigInt privateKeyInt;
-  late final Uint8List privateKey;
-  late final String hex;
+  final ECKeyPair _keyPair;
+
 
   @override
   final bool isolateSafe = true;
 
   @override
   EthAccount getEthAccount() {
-    return EthAccount(publicKeyToAddress(privateKeyToPublic(privateKeyInt)));
+    return EthAccount(publicKeyToAddress(privateKeyToPublic(_keyPair.privateKey)));
   }
 
   @override
   EthPublicKey getEthPublicKey() {
-    return EthPublicKey(privateKeyInt, privateKey);
+    //return EthPublicKey(privateKeyInt, privateKey);
+    // TODO: implement getEthPrivateKey
+    throw UnimplementedError();
   }
 
   @override
@@ -54,12 +44,12 @@ final class EthPassKey extends PasskeyWithKnownAccount {
 
   @override
   String toHex() {
-    return hex;
+    return _keyPair.hex;
   }
 
   @override
-  List<int> toBytes() {
-    return privateKey;
+  Uint8List toBytes() {
+    return _keyPair.bytes;
   }
 
   @Deprecated('Please use [signToSignatureSync]')
@@ -69,7 +59,7 @@ final class EthPassKey extends PasskeyWithKnownAccount {
     int? chainId,
     bool isEIP1559 = false,
   }) async {
-    final signature = secp256k1.sign(keccak256(payload), privateKey);
+    final signature = secp256k1.sign(keccak256(payload), _keyPair.bytes);
 
     // https://github.com/ethereumjs/ethereumjs-util/blob/8ffe697fafb33cefc7b7ec01c11e3a7da787fe0e/src/signature.ts#L26
     // be aware that signature.v already is recovery + 27
@@ -86,7 +76,7 @@ final class EthPassKey extends PasskeyWithKnownAccount {
 
   @override
   MsgSignature signToEcSignature(Uint8List payload, {int? chainId, bool isEIP1559 = false,}) {
-    final signature = secp256k1.sign(keccak256(payload), privateKey);
+    final signature = secp256k1.sign(keccak256(payload), _keyPair.bytes);
 
     // https://github.com/ethereumjs/ethereumjs-util/blob/8ffe697fafb33cefc7b7ec01c11e3a7da787fe0e/src/signature.ts#L26
     // be aware that signature.v already is recovery + 27
@@ -106,8 +96,8 @@ final class EthPassKey extends PasskeyWithKnownAccount {
       identical(this, other) ||
       other is EthPassKey &&
           runtimeType == other.runtimeType &&
-          eq.equals(privateKey, other.privateKey);
+          eq.equals(toBytes(), other.toBytes());
 
   @override
-  int get hashCode => privateKey.hashCode;
+  int get hashCode => _keyPair.bytes.hashCode;
 }

@@ -29,6 +29,7 @@ export 'src/extensions/big_integer_extension.dart';
 export 'src/extensions/boolean_extension.dart';
 export 'src/extensions/double_extension.dart';
 export 'src/extensions/integer_extension.dart';
+export 'src/extensions/list_extension.dart';
 export 'src/extensions/string_extension.dart';
 export 'src/extensions/types.dart';
 export 'src/interfaces/bip_interface.dart';

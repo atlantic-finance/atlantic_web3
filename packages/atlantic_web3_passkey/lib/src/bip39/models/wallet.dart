@@ -3,14 +3,8 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
-import 'package:pointycastle/api.dart';
-import 'package:pointycastle/block/aes.dart';
-import 'package:pointycastle/digests/sha256.dart';
-import 'package:pointycastle/key_derivators/api.dart';
 import 'package:pointycastle/key_derivators/pbkdf2.dart' as pbkdf2;
 import 'package:pointycastle/key_derivators/scrypt.dart' as scrypt;
-import 'package:pointycastle/macs/hmac.dart';
-import 'package:pointycastle/stream/ctr.dart';
 
 abstract class _KeyDerivator {
   Uint8List deriveKey(Uint8List password);
@@ -89,7 +83,7 @@ class _ScryptKeyDerivator extends _KeyDerivator {
 /// wallet is encrypted with a secret password that needs to be known in order
 /// to obtain the private key.
 class Wallet {
-  const Wallet._(this.privateKey, this._derivator, this._password, this._iv, this._id);
+  const Wallet._(this.passkey, this._derivator, this._password, this._iv, this._id);
 
   /// Creates a new wallet wrapping the specified [credentials] by encrypting
   /// the private key with the [password]. The [random] instance, which should
@@ -209,7 +203,7 @@ class Wallet {
     final aes = _initCipher(false, aesKey, iv);
 
     final privateKey = aes.process(Uint8List.fromList(encryptedPrivateKey));
-    final credentials = EthPassKey(bytesToHex(privateKey), privateKey);
+    final credentials = EthPassKey.fromBytes(privateKey);
 
     final id = parseUuid(data['id'] as String);
 
@@ -217,7 +211,7 @@ class Wallet {
   }
 
   /// The credentials stored in this wallet file
-  final EthPassKey privateKey;
+  final EthPassKey passkey;
 
   /// The key derivator used to obtain the aes decryption key from the password
   final _KeyDerivator _derivator;
@@ -267,6 +261,6 @@ class Wallet {
     final aesKey = Uint8List.view(derived.buffer, 0, 16);
 
     final aes = _initCipher(true, aesKey, _iv);
-    return aes.process(privateKey.privateKey);
+    return aes.process(passkey.toBytes());
   }
 }

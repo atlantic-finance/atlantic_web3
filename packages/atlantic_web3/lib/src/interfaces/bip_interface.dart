@@ -1,6 +1,7 @@
 import 'package:atlantic_web3/atlantic_web3.dart';
 
 abstract interface class IMnemonic {
+  String toString();
   List<String> getWords();
   StringBuffer getStringBuffer();
 }

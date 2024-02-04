@@ -31,7 +31,7 @@ void main() {
         final walletData = content['json'] as Map;
 
         final wallet = Wallet.fromJson(json.encode(walletData), password);
-        expect(bytesToHex(wallet.privateKey.privateKey), privateKey);
+        expect(wallet.passkey.toHex(), privateKey);
 
         final encodedWallet = json.decode(wallet.toJson()) as Map;
 

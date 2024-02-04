@@ -115,7 +115,7 @@ abstract class PasskeyWithKnownAccount extends Passkey {
 
   String toHex();
 
-  List<int> toBytes();
+  Uint8List toBytes();
 }
 
 /// Interface for [Passkey] that don't sign transactions locally, for

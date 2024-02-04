@@ -6,11 +6,11 @@ import 'package:hex/hex.dart';
 
 
 class ECKeyPair {
-  late List<int> _seed;
+  late Uint8List _seed;
   late BigInteger _privateKey;
   late BigInteger _publicKey;
 
-  ECKeyPair.create(List<int> seed) {
+  ECKeyPair.create(Uint8List seed) {
     _seed = seed;
     _privateKey = _privateKeyFromSeed(seed);
     _publicKey = _publicKeyFromSeed(seed);
@@ -20,19 +20,19 @@ class ECKeyPair {
 
   BigInteger get privateKey => _privateKey;
 
-  List<int> get bytes => _seed;
+  Uint8List get bytes => _seed;
 
   String get hex => HEX.encode(_seed).toString();
 
-  BigInteger _publicKeyFromSeed(List<int> bytes) {
-    final BigInteger privateKeyInt = bytesToUnsignedInt(bytes as Uint8List);
+  BigInteger _publicKeyFromSeed(Uint8List bytes) {
+    final BigInteger privateKeyInt = bytesToUnsignedInt(bytes);
 
-    final List<int> encoder = privateKeyToPublic(privateKeyInt);
+    final Uint8List encoder = privateKeyToPublic(privateKeyInt);
 
-    return bytesToUnsignedInt(encoder as Uint8List);
+    return bytesToUnsignedInt(encoder);
   }
 
-  BigInteger _privateKeyFromSeed(List<int> bytes) {
-    return bytesToUnsignedInt(bytes as Uint8List);
+  BigInteger _privateKeyFromSeed(Uint8List bytes) {
+    return bytesToUnsignedInt(bytes);
   }
 }

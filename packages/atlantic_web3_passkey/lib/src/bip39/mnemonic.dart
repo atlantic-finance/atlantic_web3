@@ -43,4 +43,8 @@ class Mnemonic implements IMnemonic {
     return buffer;
   }
 
+  @override
+  String toString() {
+    return 'Mnemonic = $_words';
+  }
 }

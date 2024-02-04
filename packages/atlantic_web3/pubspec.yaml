@@ -20,6 +20,7 @@ dependencies:
   uuid: ^3.0.7
   sec: ^1.0.1
   hex: ^0.2.0
+  unorm_dart: ^0.3.0
 
   # json-rpc
   http: ^0.13.5
