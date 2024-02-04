@@ -13,32 +13,15 @@ abstract class Passkey {
   /// expensive signing operations on another isolate.
   bool get isolateSafe => false;
 
-  /// Loads the ethereum address specified by these credentials.
-  // @Deprecated('Please use [address]')
-  // Future<EthAddress> extractAddress();
+  /// Signs the [payload] with a private key and returns the obtained
+  /// signature.
+  MsgSignature signToEcSignature(
+      Uint8List payload, {
+        int? chainId,
+        bool isEIP1559 = false,
+      });
 
-  //EthAddress get address;
 
-  /// Signs the [payload] with a private key. The output will be like the
-  /// bytes representation of the [eth_sign RPC method](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign),
-  /// but without the "Ethereum signed message" prefix.
-  /// The [payload] parameter contains the raw data, not a hash.
-  @Deprecated('Please use [signToUint8List]')
-  Future<Uint8List> sign(
-    Uint8List payload, {
-    int? chainId,
-    bool isEIP1559 = false,
-  }) async {
-    final signature =
-        await signToSignature(payload, chainId: chainId, isEIP1559: isEIP1559);
-
-    final r = padUint8ListTo32(unsignedIntToBytes(signature.r));
-    final s = padUint8ListTo32(unsignedIntToBytes(signature.s));
-    final v = unsignedIntToBytes(BigInt.from(signature.v));
-
-    // https://github.com/ethereumjs/ethereumjs-util/blob/8ffe697fafb33cefc7b7ec01c11e3a7da787fe0e/src/signature.ts#L63
-    return uint8ListFromList(r + s + v);
-  }
 
   /// Signs the [payload] with a private key. The output will be like the
   /// bytes representation of the [eth_sign RPC method](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign),
@@ -60,36 +43,6 @@ abstract class Passkey {
     return uint8ListFromList(r + s + v);
   }
 
-  /// Signs the [payload] with a private key and returns the obtained
-  /// signature.
-  @Deprecated('Please use [signToEcSignature]')
-  Future<MsgSignature> signToSignature(
-    Uint8List payload, {
-    int? chainId,
-    bool isEIP1559 = false,
-  });
-
-  /// Signs the [payload] with a private key and returns the obtained
-  /// signature.
-  MsgSignature signToEcSignature(
-    Uint8List payload, {
-    int? chainId,
-    bool isEIP1559 = false,
-  });
-
-  /// Signs an Ethereum specific signature. This method is equivalent to
-  /// [sign], but with a special prefix so that this method can't be used to
-  /// sign, for instance, transactions.
-  @Deprecated('Please use [signPersonalMessageToUint8List]')
-  Future<Uint8List> signPersonalMessage(Uint8List payload, {int? chainId}) {
-    final prefix = _messagePrefix + payload.length.toString();
-    final prefixBytes = ascii.encode(prefix);
-
-    // will be a Uint8List, see the documentation of Uint8List.+
-    final concat = uint8ListFromList(prefixBytes + payload);
-
-    return sign(concat, chainId: chainId);
-  }
 
   /// Signs an Ethereum specific signature. This method is equivalent to
   /// [signToUint8List], but with a special prefix so that this method can't be used to

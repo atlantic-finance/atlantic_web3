@@ -1,6 +1,6 @@
 
 import '../extensions/types.dart';
 
-abstract interface class IEquatable {
-  Boolean equals(Object o);
+abstract interface class IEquatable<T> {
+  Boolean equals(T o);
 }

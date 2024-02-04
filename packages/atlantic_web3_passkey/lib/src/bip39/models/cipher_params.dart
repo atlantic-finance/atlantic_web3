@@ -1,7 +1,7 @@
 
 import 'package:atlantic_web3/atlantic_web3.dart';
 
-class CipherParams implements IEquatable {
+class CipherParams implements IEquatable<Object> {
   String iv;
 
   CipherParams(this.iv) {}

@@ -3,7 +3,7 @@ import 'package:atlantic_web3/atlantic_web3.dart';
 import 'cipher_params.dart';
 import 'kdf_params.dart';
 
-final class Crypto implements IEquatable {
+final class Crypto implements IEquatable<Object> {
   String cipher;
   String ciphertext;
   CipherParams cipherparams;

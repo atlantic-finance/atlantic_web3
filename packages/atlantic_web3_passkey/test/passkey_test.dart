@@ -43,19 +43,102 @@ void main() {
     print('Test passed !!!');
   });
 
-  test('Web3Passkey.createEthPassKey()', () async {
+  test('Web3Passkey.passkey()', () async {
+    final keypair = ECKeyPair.fromKeyPairString(PRIVATE_KEY_STRING, PUBLIC_KEY_STRING);
 
-    final EthPassKey passKey = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
-
-
-    final EthPrivateKey privateKey = passKey.getEthPrivateKey();
-
-
-    final EthPublicKey publicKey = passKey.getEthPublicKey();
-
+    final passKey = EthPassKey.fromKeyPair(keypair);
 
     final EthAccount account = passKey.getEthAccount();
+    var e = account.hex;
+    var f = ADDRESS;
+    assert(account.hex == ADDRESS, 'No es igual la direccion de Ethereum');
 
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.passkey2()', () async {
+    final keypair = ECKeyPair.create(hexToBytes(PRIVATE_KEY_STRING));
+
+    final passKey = EthPassKey.fromKeyPair(keypair);
+
+    final EthAccount account = passKey.getEthAccount();
+    var e = account.hex;
+    var f = ADDRESS;
+    assert(account.hex == ADDRESS, 'No es igual la direccion de Ethereum');
+
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.passkey3()', () async {
+    final keypair = ECKeyPair.create(hexToBytes('0x6ebd8ad6d4dca011cc43971d4b732137214595f42e3905b68bdc6d9e2d8a3405'));
+
+    final passKey = EthPassKey.fromKeyPair(keypair);
+
+    final EthAccount account = passKey.getEthAccount();
+    var e = account.hex;
+    var f = '0xb9c25bf81f4d851e44c2c89965a9bb98d61d6496';
+    assert(e == f, 'No es igual la direccion de Ethereum');
+
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.comparePasskey()', () async {
+    //dart
+    final BigInt dartPrivateKey =  BigInt.parse('57458847547880240030856167414489482256357658294094444623999178450420787849501');
+    final BigInt dartPublicKey = BigInt.parse('6423861798942815137879968279093551601014790657182194664604296570150792584190454811403313904850169111130564710815286309591107414852486073800877068045094617');
+
+    final keypair1 = ECKeyPair.fromKeyPairInt(dartPrivateKey, dartPublicKey);
+
+    //java
+    final BigInt javaPrivateKey = BigInt.parse('57458847547880240030856167414489482256357658294094444623999178450420787849501');
+    final BigInt javaPublicKey = BigInt.parse('6423861798942815137879968279093551601014790657182194664604296570150792584190454811403313904850169111130564710815286309591107414852486073800877068045094617');
+
+    final keypair2 = ECKeyPair.fromKeyPairInt(javaPrivateKey, javaPublicKey);
+
+    final result = keypair1.equals(keypair2);
+
+    assert(result, 'No es igual los pares de claves');
+
+    final EthPassKey passkey1 = EthPassKey.fromKeyPair(keypair1);
+
+    final EthPassKey passkey2 = EthPassKey.fromKeyPair(keypair2);
+
+    final result2 = passkey1.equals(passkey2);
+
+    assert(result2, 'No es igual la llave de acceso');
+
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.comparePasskey2()', () async {
+
+    final BigInt privateKey =  BigInt.parse('57458847547880240030856167414489482256357658294094444623999178450420787849501');
+    final BigInt publicKey = BigInt.parse('6423861798942815137879968279093551601014790657182194664604296570150792584190454811403313904850169111130564710815286309591107414852486073800877068045094617');
+
+    final passkey1 = EthPassKey.fromKeyPair(ECKeyPair.fromKeyPairInt(privateKey, publicKey));
+
+    final passkey2 = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
+
+    final result2 = passkey1.equals(passkey2);
+
+    assert(result2, 'No es igual la llave de acceso');
+
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.comparePasskey3()', () async {
+
+    final BigInt privateKey =  BigInt.parse('57458847547880240030856167414489482256357658294094444623999178450420787849501');
+    final BigInt publicKey = BigInt.parse('6423861798942815137879968279093551601014790657182194664604296570150792584190454811403313904850169111130564710815286309591107414852486073800877068045094617');
+
+    final passkey1 = EthPassKey.fromKeyPair(ECKeyPair.fromKeyPairInt(privateKey, publicKey));
+
+    final passkey2 = EthPassKey.fromKeyPair(ECKeyPair.fromKeyPairString(PRIVATE_KEY_STRING, PUBLIC_KEY_STRING));
+
+
+    final result2 = passkey1.equals(passkey2);
+
+    assert(result2, 'No es igual la llave de acceso');
 
     print('Test passed !!!');
   });

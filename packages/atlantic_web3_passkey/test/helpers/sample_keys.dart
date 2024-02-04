@@ -10,6 +10,8 @@ const String PUBLIC_KEY_STRING =
 
 const String ADDRESS = "0xef678007d18427e6022059dbc264f27507cd1ffc";
 
+/// Las claves publicas y privadas no son equivalente a la frase mnemotecnicas
+
 const String PASSWORD = "Insecure Pa55w0rd";
 
 const String MNEMONIC =

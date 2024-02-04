@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:hex/hex.dart';
 // ignore: implementation_imports
 import 'package:pointycastle/src/utils.dart' as p_utils;
 
@@ -44,10 +45,9 @@ String bytesToHex(
 /// Converts the hexadecimal string, which can be prefixed with 0x, to a byte
 /// sequence.
 Uint8List hexToBytes(String hexStr) {
-  final bytes = hex.decode(strip0x(hexStr));
-  if (bytes is Uint8List) return bytes;
-
-  return Uint8List.fromList(bytes);
+  final str = strip0x(hexStr);
+  final bytes = HEX.decode(str);
+  return bytes as Uint8List;
 }
 
 Uint8List unsignedIntToBytes(BigInt number) {

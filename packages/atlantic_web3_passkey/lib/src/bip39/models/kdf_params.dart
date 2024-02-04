@@ -1,7 +1,7 @@
 
 import 'package:atlantic_web3/atlantic_web3.dart';
 
-abstract interface class IKdfParams implements IEquatable {
+abstract interface class IKdfParams implements IEquatable<Object> {
   int getDklen();
 
   String getSalt();

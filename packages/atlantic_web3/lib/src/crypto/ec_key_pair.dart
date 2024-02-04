@@ -2,18 +2,29 @@
 import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
-import 'package:hex/hex.dart';
 
 
-class ECKeyPair {
+class ECKeyPair implements IEquatable<ECKeyPair> {
   late Uint8List _seed;
   late BigInteger _privateKey;
   late BigInteger _publicKey;
 
-  ECKeyPair.create(Uint8List seed) {
-    _seed = seed;
-    _privateKey = _privateKeyFromSeed(seed);
-    _publicKey = _publicKeyFromSeed(seed);
+  ECKeyPair.create(Uint8List privateKeyBytes) {
+    _seed = privateKeyBytes;
+    _privateKey = _privateKeyFromSeed(privateKeyBytes);
+    _publicKey = _publicKeyFromSeed(privateKeyBytes);
+  }
+
+  ECKeyPair.fromKeyPairString(String privateKey, String publicKey) {
+    _seed = hexToBytes(privateKey);
+    _privateKey = bytesToUnsignedInt( hexToBytes(privateKey) );
+    _publicKey = bytesToUnsignedInt( hexToBytes(publicKey) );
+  }
+
+  ECKeyPair.fromKeyPairInt(BigInteger privateKey, BigInteger publicKey) {
+    _seed = intToBytes(privateKey);
+    _privateKey = privateKey;
+    _publicKey = publicKey;
   }
 
   BigInteger get publicKey => _publicKey;
@@ -22,7 +33,13 @@ class ECKeyPair {
 
   Uint8List get bytes => _seed;
 
-  String get hex => HEX.encode(_seed).toString();
+  String get hex => bytesToHex(_seed);
+
+  @override
+  Boolean equals(ECKeyPair param) {
+    return publicKey == param.publicKey
+        && privateKey == param.privateKey;
+  }
 
   BigInteger _publicKeyFromSeed(Uint8List bytes) {
     final BigInteger privateKeyInt = bytesToUnsignedInt(bytes);
