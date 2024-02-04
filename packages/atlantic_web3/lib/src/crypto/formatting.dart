@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
-import 'package:hex/hex.dart';
 // ignore: implementation_imports
 import 'package:pointycastle/src/utils.dart' as p_utils;
 
@@ -46,7 +45,7 @@ String bytesToHex(
 /// sequence.
 Uint8List hexToBytes(String hexStr) {
   final str = strip0x(hexStr);
-  final bytes = HEX.decode(str);
+  final bytes = hex.decode(str);
   return bytes as Uint8List;
 }
 
