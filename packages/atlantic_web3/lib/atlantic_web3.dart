@@ -31,6 +31,7 @@ export 'src/extensions/integer_extension.dart';
 export 'src/extensions/list_extension.dart';
 export 'src/extensions/string_extension.dart';
 export 'src/extensions/types.dart';
+export 'src/extensions/uint8list_extensions.dart';
 export 'src/interfaces/bip_interface.dart';
 export 'src/interfaces/equatable.dart';
 export 'src/interfaces/web3_authentication_interface.dart';

@@ -24,9 +24,13 @@ dependencies:
     path: ../web3_providers_ws
 
   #para guardar el passkey
-  sqlite3: ^2.3.0
-  encrypt: ^5.0.3
+  path: ^1.8.1
+  path_provider: ^2.0.8
   device_info_plus: ^8.2.0
+  sqlite3: ^2.3.0
+  sqlite3_flutter_libs: ^0.5.19+1
+
+  encrypt: ^5.0.3
   pointycastle: ^3.6.2
 
 

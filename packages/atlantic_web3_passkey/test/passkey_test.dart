@@ -143,5 +143,20 @@ void main() {
     print('Test passed !!!');
   });
 
+  test('Web3Passkey.saveEthPasskey()', () async {
+
+    final EthPassKey passkey1 = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
+
+    //ID
+    const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
+
+    final EthPassKey passkey2 = await web3.saveEthPasskey(documentId, 'Mi Wallet', passkey1, PASSWORD);
+
+    final result = passkey1.equals(passkey2);
+
+    assert(result, 'No es igual la llave de acceso');
+
+    print('Test passed !!!');
+  });
 }
 

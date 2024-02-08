@@ -14,16 +14,27 @@ final class EthPassKey extends PasskeyWithKnownAccount implements IEquatable<Eth
   EthPassKey.fromBytes(Uint8List bytes) : this.fromKeyPair(ECKeyPair.create(bytes));
 
   EthPassKey.fromKeyPair(this._keyPair);
+  EthPassKey.fromKeyPairExtender(this._keyPair, this._documentID, this._name, this._photoURL);
 
 
   /// ECC's d private parameter.
   final ECKeyPair _keyPair;
-
+  String? _documentID;
+  String? _name;
+  String? _photoURL;
 
   @override
   final bool isolateSafe = true;
 
+  Boolean get isStorage => _documentID != null && _name != null;
+
   ECKeyPair get keyPair => _keyPair;
+
+  String get documentID => _documentID!;
+
+  String get name => _name!;
+
+  String? get photoURL => _photoURL;
 
   @override
   EthAccount getEthAccount() {
@@ -76,7 +87,7 @@ final class EthPassKey extends PasskeyWithKnownAccount implements IEquatable<Eth
   }
 
   @override
-  bool operator ==(Object other) => equals(other as EthPassKey);
+  Boolean operator ==(Object other) => equals(other as EthPassKey);
 
   @override
   int get hashCode => _keyPair.bytes.hashCode;
