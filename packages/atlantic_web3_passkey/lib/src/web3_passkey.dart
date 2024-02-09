@@ -162,7 +162,7 @@ class Web3Passkey implements IWeb3Passkey {
   }
 
   @override
-  Future<EthPassKey> getEthPasskey(String passKeyID, String passPhrase) async {
+  Future<EthPassKey> getEthPasskey(String passkeyID, String passPhrase) async {
     final AES algorithm = AES(Key.fromUtf8(passPhrase));
 
     final EthPassKeyModel result = await _keyStore.findOne(passkeyID);
