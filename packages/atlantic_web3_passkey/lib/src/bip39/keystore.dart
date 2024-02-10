@@ -28,29 +28,29 @@ final class EthPassKeyModel {
         name = json['name'],
         privateKey = json['privateKey'],
         publicKey =  json['publicKey'],
-        isDefault =  json['isDefault'],
+        isDefault = Sqlite3Helper.sqliteToBoolean(json['isDefault']),
         photoURL = json['photoURL'];
 
   List<dynamic> toListSave() => [
     passkeyID,
-    isActive,
-    created,
-    updated,
+    Sqlite3Helper.booleanToSqlite(isActive),
+    Sqlite3Helper.dateToSqlite(created),
+    Sqlite3Helper.dateToSqlite(updated),
     name,
     privateKey,
     publicKey,
-    isDefault,
+    Sqlite3Helper.booleanToSqlite(isDefault),
     photoURL
   ];
 
   List<dynamic> toListUpdate() => [
-    isActive,
-    created,
-    updated,
+    Sqlite3Helper.booleanToSqlite(isActive),
+    Sqlite3Helper.dateToSqlite(created),
+    Sqlite3Helper.dateToSqlite(updated),
     name,
     privateKey,
     publicKey,
-    isDefault,
+    Sqlite3Helper.booleanToSqlite(isDefault),
     photoURL,
     passkeyID
   ];

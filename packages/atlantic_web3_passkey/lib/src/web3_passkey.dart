@@ -90,28 +90,34 @@ class Web3Passkey implements IWeb3Passkey {
 
   @override
   Future<EthPassKey> saveEthPasskey(String documentId, String name, EthPassKey passKey, String passPhrase) async {
-    final AES algorithm = AES(Key.fromUtf8(passPhrase));
+    final sha256 = SHA256Digest();
+    final key = sha256.process(utf8.encode(passPhrase));
 
-    final Encrypted encName = algorithm.encrypt(utf8.encode(name));
-    final Encrypted encPrivateKey = algorithm.encrypt(utf8.encode(passKey.keyPair.privateKey.toString()));
-    final Encrypted encPublicKey = algorithm.encrypt(utf8.encode(passKey.keyPair.publicKey.toString()));
+    final Encrypter algorithm = Encrypter(AES(Key(key)));
+
+    final DeviceResult device = await DeviceHelper.getDevice();
+    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
+
+    final Encrypted encName = algorithm.encrypt(name, iv: iv);
+    final Encrypted encPrivateKey = algorithm.encrypt(passKey.keyPair.privateKey.toString(), iv: iv);
+    final Encrypted encPublicKey = algorithm.encrypt(passKey.keyPair.publicKey.toString(), iv: iv);
 
     final model = EthPassKeyModel(
         documentId,
         true,
         DateTime.now(),
         DateTime.now(),
-        encName.toString(),
-        encPrivateKey.toString(),
-        encPublicKey.toString(),
+        encName.base64,
+        encPrivateKey.base64,
+        encPublicKey.base64,
         false,
         null);
 
     final EthPassKeyModel result = await _keyStore.create(model);
 
-    final decName = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.name)));
-    final decPrivateKey = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.privateKey)));
-    final decPublicKey = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.publicKey)));
+    final decName = algorithm.decrypt(Encrypted.fromBase64(result.name), iv: iv);
+    final decPrivateKey = algorithm.decrypt(Encrypted.fromBase64(result.privateKey), iv: iv);
+    final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(result.publicKey), iv: iv);
 
     // Encapsular claves publica y privada
     final ECKeyPair keyPair = ECKeyPair.fromKeyPairString(decPrivateKey, decPublicKey);
@@ -146,13 +152,19 @@ class Web3Passkey implements IWeb3Passkey {
 
   @override
   Future<EthPassKey> getDefaultEthPasskey(String passPhrase) async {
-    final AES algorithm = AES(Key.fromUtf8(passPhrase));
+    final sha256 = SHA256Digest();
+    final key = sha256.process(utf8.encode(passPhrase));
+
+    final Encrypter algorithm = Encrypter(AES(Key(key)));
+
+    final DeviceResult device = await DeviceHelper.getDevice();
+    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
 
     final EthPassKeyModel result = await _keyStore.findDefault();
 
-    final decName = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.name)));
-    final decPrivateKey = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.privateKey)));
-    final decPublicKey = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.publicKey)));
+    final decName = algorithm.decrypt(Encrypted.fromBase64(result.name), iv: iv);
+    final decPrivateKey = algorithm.decrypt(Encrypted.fromBase64(result.privateKey), iv: iv);
+    final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(result.publicKey), iv: iv);
 
     // Encapsular claves publica y privada
     final ECKeyPair keyPair = ECKeyPair.fromKeyPairString(decPrivateKey, decPublicKey);
@@ -163,13 +175,19 @@ class Web3Passkey implements IWeb3Passkey {
 
   @override
   Future<EthPassKey> getEthPasskey(String passkeyID, String passPhrase) async {
-    final AES algorithm = AES(Key.fromUtf8(passPhrase));
+    final sha256 = SHA256Digest();
+    final key = sha256.process(utf8.encode(passPhrase));
+
+    final Encrypter algorithm = Encrypter(AES(Key(key)));
+
+    final DeviceResult device = await DeviceHelper.getDevice();
+    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
 
     final EthPassKeyModel result = await _keyStore.findOne(passkeyID);
 
-    final decName = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.name)));
-    final decPrivateKey = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.privateKey)));
-    final decPublicKey = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(result.publicKey)));
+    final decName = algorithm.decrypt(Encrypted.fromBase64(result.name), iv: iv);
+    final decPrivateKey = algorithm.decrypt(Encrypted.fromBase64(result.privateKey), iv: iv);
+    final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(result.publicKey), iv: iv);
 
     // Encapsular claves publica y privada
     final ECKeyPair keyPair = ECKeyPair.fromKeyPairString(decPrivateKey, decPublicKey);
@@ -180,15 +198,21 @@ class Web3Passkey implements IWeb3Passkey {
 
   @override
   Future<List<EthPassKey>> getAllEthPasskey(String passPhrase) async {
-    final AES algorithm = AES(Key.fromUtf8(passPhrase));
+    final sha256 = SHA256Digest();
+    final key = sha256.process(utf8.encode(passPhrase));
+
+    final Encrypter algorithm = Encrypter(AES(Key(key)));
+
+    final DeviceResult device = await DeviceHelper.getDevice();
+    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
 
     final List<EthPassKeyModel> result = await _keyStore.find();
 
     final List<EthPassKey> list = result.map((element) {
 
-      final decName = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(element.name)));
-      final decPrivateKey = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(element.privateKey)));
-      final decPublicKey = utf8.decode(algorithm.decrypt(Encrypted.fromUtf8(element.publicKey)));
+      final decName = algorithm.decrypt(Encrypted.fromBase64(element.name), iv: iv);
+      final decPrivateKey = algorithm.decrypt(Encrypted.fromBase64(element.privateKey), iv: iv);
+      final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(element.publicKey), iv: iv);
 
       // Encapsular claves publica y privada
       final ECKeyPair keyPair = ECKeyPair.fromKeyPairString(decPrivateKey, decPublicKey);

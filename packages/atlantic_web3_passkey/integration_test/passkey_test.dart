@@ -3,16 +3,28 @@ import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
 import 'package:atlantic_web3_passkey/atlantic_web3_passkey.dart';
+import 'package:encrypt/encrypt.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:pointycastle/export.dart';
+import 'package:web3_providers_http/web3_providers_http.dart';
 
 import 'helpers/sample_keys.dart';
 
 
 
+
 void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   late IWeb3Passkey web3;
 
-  setUp(() {
+  setUp(() async {
+    //Run Web3
+    await Web3Client.initialize(
+      name: 'Mi cliente',
+      provider: HttpProvider('http://localhost:7545'),
+    );
+
     web3 = Web3Passkey.instance();
   });
 
@@ -143,6 +155,28 @@ void main() {
     print('Test passed !!!');
   });
 
+  test('Web3Passkey.crypto()', () async {
+    final sha256 = SHA256Digest();
+    final key = sha256.process(utf8.encode(PASSWORD));
+
+    final Encrypter algorithm = Encrypter(AES(Key(key)));
+
+    final DeviceResult result = await DeviceHelper.getDevice();
+    final IV iv = IV.fromUtf8(result.code.substring(0, 16));
+
+    final Encrypted encName = algorithm.encrypt('My Wallet', iv: iv);
+
+    print(encName.base64);
+
+    final IV iv2 = IV.fromUtf8(result.code.substring(0, 16));
+
+    final decName = algorithm.decrypt(Encrypted.fromBase64(encName.base64), iv: iv2);
+
+    print(decName);
+
+    print('Test passed !!!');
+  });
+
   test('Web3Passkey.saveEthPasskey()', () async {
 
     final EthPassKey passkey1 = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
@@ -151,6 +185,22 @@ void main() {
     const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
 
     final EthPassKey passkey2 = await web3.saveEthPasskey(documentId, 'Mi Wallet', passkey1, PASSWORD);
+
+    final result = passkey1.equals(passkey2);
+
+    assert(result, 'No es igual la llave de acceso');
+
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.getEthPasskey()', () async {
+
+    final EthPassKey passkey1 = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
+
+    //ID
+    const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
+
+    final EthPassKey passkey2 = await web3.getEthPasskey(documentId, PASSWORD);
 
     final result = passkey1.equals(passkey2);
 
