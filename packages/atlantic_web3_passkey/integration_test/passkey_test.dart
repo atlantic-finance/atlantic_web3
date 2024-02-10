@@ -177,6 +177,16 @@ void main() {
     print('Test passed !!!');
   });
 
+  test('Web3Passkey.deleteEthPasskey()', () async {
+
+    //ID
+    const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
+
+    await web3.deleteEthPasskey(documentId);
+
+    print('Test passed !!!');
+  });
+
   test('Web3Passkey.saveEthPasskey()', () async {
 
     final EthPassKey passkey1 = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
@@ -203,6 +213,43 @@ void main() {
     final EthPassKey passkey2 = await web3.getEthPasskey(documentId, PASSWORD);
 
     final result = passkey1.equals(passkey2);
+
+    assert(result, 'No es igual la llave de acceso');
+
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.getAllEthPasskey()', () async {
+
+    final List<EthPassKey> list = await web3.getAllEthPasskey(PASSWORD);
+
+    assert(list.isNotEmpty, 'No es igual la llave de acceso');
+
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.setDefaultEthPasskey()', () async {
+
+    //ID
+    const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
+
+    final EthPassKey passKey = await web3.setDefaultEthPasskey(documentId, PASSWORD);
+
+    final result = passKey.documentID.equals(documentId);
+
+    assert(result, 'No es igual la llave de acceso');
+
+    print('Test passed !!!');
+  });
+
+  test('Web3Passkey.getDefaultEthPasskey()', () async {
+
+    //ID
+    const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
+
+    final EthPassKey passKey = await web3.getDefaultEthPasskey(PASSWORD);
+
+    final result = passKey.documentID.equals(documentId);
 
     assert(result, 'No es igual la llave de acceso');
 

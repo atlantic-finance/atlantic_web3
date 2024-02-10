@@ -112,13 +112,15 @@ abstract interface class IEthPassKeyStore {
 
   Future<EthPassKeyModel> update(EthPassKeyModel param);
 
+  Future<Void> delete(EthPassKeyModel param);
+
   Future<EthPassKeyModel> findDefault();
 
   Future<EthPassKeyModel> findOne(String passkeyID);
 
   Future<List<EthPassKeyModel>> find();
 
-  Future<Integer> existDefault(String passKeyID);
+  Future<Integer> exist(String passKeyID);
 }
 
 final class EthPassKeyStore extends KeyStore implements IEthPassKeyStore {
@@ -186,6 +188,21 @@ final class EthPassKeyStore extends KeyStore implements IEthPassKeyStore {
   }
 
   @override
+  Future<Void> delete(EthPassKeyModel param) async {
+    // Get connection
+    final Database db = await getDbConnection();
+
+    // Create query
+    const String query = '''
+    DELETE FROM passkey WHERE passkeyID = ?
+    ''';
+
+    // Prepare a statement to run it multiple times:
+    db.prepare(query)
+        .execute([param.passkeyID]);
+  }
+
+  @override
   Future<EthPassKeyModel> findDefault() async {
     // Get connection
     final Database db = await getDbConnection();
@@ -235,7 +252,7 @@ final class EthPassKeyStore extends KeyStore implements IEthPassKeyStore {
     // Create query
     const String query = '''
     SELECT * FROM passkey WHERE
-      sActive = 1
+      isActive = 1
     ''';
 
     // Get row inserted
@@ -251,14 +268,14 @@ final class EthPassKeyStore extends KeyStore implements IEthPassKeyStore {
   }
 
   @override
-  Future<Integer> existDefault(String passKeyID) async {
+  Future<Integer> exist(String passKeyID) async {
     // Get connection
     final Database db = await getDbConnection();
 
     // Create query
     const String query = '''
     SELECT COUNT(*) FROM passkey WHERE
-      passkeyID = ? AND isDefault = 1 AND isActive = 1
+      passkeyID = ? AND isActive = 1
     ''';
 
     // Get row inserted

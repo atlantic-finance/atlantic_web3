@@ -120,23 +120,23 @@ class Web3Passkey implements IWeb3Passkey {
     final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(result.publicKey), iv: iv);
 
     // Encapsular claves publica y privada
-    final ECKeyPair keyPair = ECKeyPair.fromKeyPairString(decPrivateKey, decPublicKey);
+    final ECKeyPair keyPair = ECKeyPair.fromKeyPairInt(BigInt.parse(decPrivateKey), BigInt.parse(decPublicKey));
 
     // Crear derivador de llaves de accesos usando las claves
     return EthPassKey.fromKeyPairExtender(keyPair, documentId, decName, null);
   }
 
   @override
-  Future<EthPassKey> setDefaultEthPasskey(String passKeyID, String passPhrase) async {
-    final Integer exist = await _keyStore.existDefault(passKeyID);
+  Future<EthPassKey> setDefaultEthPasskey(String passkeyID, String passPhrase) async {
+    final Integer exist = await _keyStore.exist(passkeyID);
 
     if (exist == 0) {
-      throw Exception('No exist default');
+      throw Exception('No exist passkey');
     } else {
       final List<EthPassKeyModel> list = await _keyStore.find();
 
       for (final element in list) {
-        if (element.passkeyID == passKeyID) {
+        if (element.passkeyID == passkeyID) {
           element.isDefault = true;
         } else {
           element.isDefault = false;
@@ -148,6 +148,13 @@ class Web3Passkey implements IWeb3Passkey {
 
     // Reusar
     return getDefaultEthPasskey(passPhrase);
+  }
+
+  @override
+  Future<Void> deleteEthPasskey(String passkeyID) async {
+    final EthPassKeyModel result = await _keyStore.findOne(passkeyID);
+
+    return _keyStore.delete(result);
   }
 
   @override
@@ -167,7 +174,7 @@ class Web3Passkey implements IWeb3Passkey {
     final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(result.publicKey), iv: iv);
 
     // Encapsular claves publica y privada
-    final ECKeyPair keyPair = ECKeyPair.fromKeyPairString(decPrivateKey, decPublicKey);
+    final ECKeyPair keyPair = ECKeyPair.fromKeyPairInt(BigInt.parse(decPrivateKey), BigInt.parse(decPublicKey));
 
     // Crear derivador de llaves de accesos usando las claves
     return EthPassKey.fromKeyPairExtender(keyPair, result.passkeyID, decName, null);
@@ -190,7 +197,7 @@ class Web3Passkey implements IWeb3Passkey {
     final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(result.publicKey), iv: iv);
 
     // Encapsular claves publica y privada
-    final ECKeyPair keyPair = ECKeyPair.fromKeyPairString(decPrivateKey, decPublicKey);
+    final ECKeyPair keyPair = ECKeyPair.fromKeyPairInt(BigInt.parse(decPrivateKey), BigInt.parse(decPublicKey));
 
     // Crear derivador de llaves de accesos usando las claves
     return EthPassKey.fromKeyPairExtender(keyPair, result.passkeyID, decName, null);
@@ -215,7 +222,7 @@ class Web3Passkey implements IWeb3Passkey {
       final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(element.publicKey), iv: iv);
 
       // Encapsular claves publica y privada
-      final ECKeyPair keyPair = ECKeyPair.fromKeyPairString(decPrivateKey, decPublicKey);
+      final ECKeyPair keyPair = ECKeyPair.fromKeyPairInt(BigInt.parse(decPrivateKey), BigInt.parse(decPublicKey));
 
       // Crear derivador de llaves de accesos usando las claves
       return EthPassKey.fromKeyPairExtender(keyPair, element.passkeyID, decName, null);

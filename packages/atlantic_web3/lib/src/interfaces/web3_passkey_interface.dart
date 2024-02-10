@@ -9,6 +9,7 @@ abstract interface class IWeb3Passkey {
 
   Future<EthPassKey> saveEthPasskey(String documentId, String name, EthPassKey passKey, String passPhrase);
   Future<EthPassKey> setDefaultEthPasskey(String passKeyID, String passPhrase);
+  Future<Void> deleteEthPasskey(String passkeyID);
 
   Future<EthPassKey> getDefaultEthPasskey(String passPhrase);
   Future<EthPassKey> getEthPasskey(String passKeyID, String passPhrase);
