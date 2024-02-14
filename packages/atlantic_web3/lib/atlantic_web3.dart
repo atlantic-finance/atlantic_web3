@@ -49,6 +49,7 @@ export 'src/subscritions/filter/new_pending_transactions_filter.dart';
 export 'src/subscritions/filters.dart';
 export 'src/subscritions/options.dart';
 export 'src/subscritions/params.dart';
+export 'src/types/base.dart';
 export 'src/types/connection_types.dart';
 export 'src/types/eth_account.dart';
 export 'src/types/eth_amount.dart';

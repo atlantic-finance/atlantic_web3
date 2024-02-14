@@ -6,7 +6,7 @@ import 'package:sqlite3/sqlite3.dart';
 import '../helpers/sqlite3_helper.dart';
 
 
-final class EthPassKeyModel {
+final class EthPassKeyModel extends BaseDocument {
   final String passkeyID;
   final Boolean isActive;
   final DateTime created;
@@ -31,6 +31,7 @@ final class EthPassKeyModel {
         isDefault = Sqlite3Helper.sqliteToBoolean(json['isDefault']),
         photoURL = json['photoURL'];
 
+  @override
   List<dynamic> toListSave() => [
     passkeyID,
     Sqlite3Helper.booleanToSqlite(isActive),
@@ -43,6 +44,7 @@ final class EthPassKeyModel {
     photoURL
   ];
 
+  @override
   List<dynamic> toListUpdate() => [
     Sqlite3Helper.booleanToSqlite(isActive),
     Sqlite3Helper.dateToSqlite(created),
