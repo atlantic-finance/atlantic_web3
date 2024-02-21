@@ -14,6 +14,7 @@ export 'src/abi/types/types.dart';
 export 'src/contracts/deployed_contract.dart';
 export 'src/contracts/generated_contract.dart'; //
 export 'src/credentials/passkey.dart';
+export 'src/credentials/sign.dart';
 export 'src/crypto/ec_key_pair.dart';
 export 'src/crypto/formatting.dart';
 export 'src/crypto/keccak.dart';
@@ -38,6 +39,7 @@ export 'src/interfaces/web3_authentication_interface.dart';
 export 'src/interfaces/web3_blockchain_interface.dart';
 export 'src/interfaces/web3_client_interface.dart';
 export 'src/interfaces/web3_contract_interface.dart';
+export 'src/interfaces/web3_gasfee_interface.dart';
 export 'src/interfaces/web3_passkey_interface.dart';
 export 'src/providers/base_provider.dart';
 export 'src/subscritions/engine.dart';

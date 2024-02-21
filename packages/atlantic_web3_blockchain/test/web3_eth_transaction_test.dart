@@ -173,7 +173,7 @@ void main() {
       expect(
         bytesToHex(
           uint8ListFromList(
-            rlp.encode(prependTransactionType(0x02, signature)),
+            rlp.encode(Sing.prependTransactionType(0x02, signature)),
           ),
         ),
         strip0x(tx['signedTransactionRLP'] as String),

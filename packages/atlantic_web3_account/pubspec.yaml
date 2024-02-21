@@ -12,6 +12,11 @@ dependencies:
   #atlantic web3
   atlantic_web3:
     path: ../atlantic_web3
+  atlantic_web3_passkey:
+    path: ../atlantic_web3_passkey
+  atlantic_web3_gasfee:
+    path: ../atlantic_web3_gasfee
+
   #providers
   web3_providers_http:
     path: ../web3_providers_http

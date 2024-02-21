@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:atlantic_web3/atlantic_web3.dart';
 
-class Web3Contract implements IWeb3Contract {
+final class Web3Contract extends Sing implements IWeb3Contract {
   static const EthBlockNum _defaultBlock = EthBlockNum.current();
 
   // Instancia privada
@@ -146,5 +146,29 @@ class Web3Contract implements IWeb3Contract {
       [address.hex, blockParam],
     );
     return hexToBytes(hex);
+  }
+
+  @override
+  Future<BigInt> estimateGas2({EthAccount? from, EthAccount? to, EthAmount? value, BigInt? gas, EthAmount? gasPrice, EthAmount? maxPriorityFeePerGas, EthAmount? maxFeePerGas, Uint8List? data}) {
+    // TODO: implement estimateGas2
+    throw UnimplementedError();
+  }
+
+  @override
+  BaseProvider getDefaultProvider() {
+    // TODO: implement getDefaultProvider
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<EthAmount> getGasPrice() {
+    // TODO: implement getGasPrice
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<int> getTransactionCount(EthAccount address, {EthBlockNum? atBlock}) {
+    // TODO: implement getTransactionCount
+    throw UnimplementedError();
   }
 }

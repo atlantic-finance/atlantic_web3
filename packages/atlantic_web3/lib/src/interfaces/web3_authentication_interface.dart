@@ -12,13 +12,6 @@ abstract interface class IWeb3Account {
         bool fetchChainIdFromNetworkId = false,
       });
 
-  Future<Uint8List> signTransaction(
-      Passkey cred,
-      EthTransaction2 transaction, {
-        int? chainId = 1,
-        bool fetchChainIdFromNetworkId = false,
-      });
-
   Future<String> sendRawTransaction(Uint8List signedTransaction);
 
 
