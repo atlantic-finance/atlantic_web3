@@ -23,7 +23,7 @@ class Web3Passkey implements IWeb3Passkey {
   }
   late final EthBip39Generator _bip39;
   late final EthPassKeyStore _keyStore;
-  String? inMemoryPassPhrase;
+  String? _inMemoryPassPhrase;
 
   Web3Passkey._() {
     _bip39 = EthBip39Generator();
@@ -31,7 +31,11 @@ class Web3Passkey implements IWeb3Passkey {
   }
 
   @override
-  Boolean get isAuthenticate => inMemoryPassPhrase != null;
+  Boolean get isAuthenticate => _inMemoryPassPhrase != null;
+
+  @override
+  set inMemoryPassPhrase(String passPhrase) =>
+      _inMemoryPassPhrase = passPhrase;
 
   /// Permite generar frases mnemonic dependiendo el lenguaje y longitud, tambien
   /// debe tomar en cuenta el id del dispositivo para usarlo como una entropy inicial
@@ -143,7 +147,7 @@ class Web3Passkey implements IWeb3Passkey {
     } else {
 
       //set passphrase in memory
-      inMemoryPassPhrase = passPhrase;
+      _inMemoryPassPhrase = passPhrase;
 
       final List<EthPassKeyModel> list = await _keyStore.find();
 
@@ -169,7 +173,7 @@ class Web3Passkey implements IWeb3Passkey {
 
     //set passphrase in memory
     if (result.isDefault == true) {
-      inMemoryPassPhrase = null;
+      _inMemoryPassPhrase = null;
     }
 
     return _keyStore.delete(result);
@@ -202,12 +206,12 @@ class Web3Passkey implements IWeb3Passkey {
   @override
   Future<EthPassKey> getInMemoryCurrentEthPassKey() async {
 
-    if (inMemoryPassPhrase == null) {
+    if (_inMemoryPassPhrase == null) {
       throw Error();
     }
 
     final sha256 = SHA256Digest();
-    final key = sha256.process(utf8.encode(inMemoryPassPhrase!));
+    final key = sha256.process(utf8.encode(_inMemoryPassPhrase!));
 
     final Encrypter algorithm = Encrypter(AES(Key(key)));
 

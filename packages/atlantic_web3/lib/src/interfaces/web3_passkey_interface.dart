@@ -3,6 +3,7 @@ import 'package:atlantic_web3/atlantic_web3.dart';
 
 abstract interface class IWeb3Passkey {
   Boolean get isAuthenticate;
+  set inMemoryPassPhrase(String passPhrase);
 
   IMnemonic generateMnemonic({int length, Language language});
 
