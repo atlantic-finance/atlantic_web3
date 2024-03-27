@@ -233,7 +233,7 @@ void main() {
     //ID
     const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
 
-    final EthPassKey passKey = await web3.setDefaultEthPasskey(documentId, PASSWORD);
+    final EthPassKey passKey = await web3.setCurrentEthPasskey(documentId, PASSWORD);
 
     final result = passKey.documentID.equals(documentId);
 
@@ -247,7 +247,7 @@ void main() {
     //ID
     const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
 
-    final EthPassKey passKey = await web3.getDefaultEthPasskey(PASSWORD);
+    final EthPassKey passKey = await web3.getCurrentEthPassKey(PASSWORD);
 
     final result = passKey.documentID.equals(documentId);
 

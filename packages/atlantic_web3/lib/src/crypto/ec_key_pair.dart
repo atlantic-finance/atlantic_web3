@@ -41,6 +41,20 @@ class ECKeyPair implements IEquatable<ECKeyPair> {
         && privateKey == param.privateKey;
   }
 
+  @override
+  Boolean operator ==(Object other) => equals(other as ECKeyPair);
+
+  @override
+  int get hashCode => _seed.hashCode;
+
+  @override
+  String toString() {
+    return 'ECKeyPair{'
+        'privateKey: $_privateKey, '
+        'publicKey: $_publicKey'
+        '}';
+  }
+
   BigInteger _publicKeyFromSeed(Uint8List bytes) {
     final BigInteger privateKeyInt = bytesToUnsignedInt(bytes);
 

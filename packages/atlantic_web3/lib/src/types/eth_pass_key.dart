@@ -91,4 +91,16 @@ final class EthPassKey extends PasskeyWithKnownAccount implements IEquatable<Eth
 
   @override
   int get hashCode => _keyPair.bytes.hashCode;
+
+  @override
+  String toString() {
+    return 'EthPassKey{'
+        'keyPair: $_keyPair, '
+        'documentID: $_documentID, '
+        'name: $_name, '
+        'photoURL: $_photoURL, '
+        'isolateSafe: $isolateSafe}';
+  }
+
+
 }
