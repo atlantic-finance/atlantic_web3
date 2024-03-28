@@ -32,7 +32,7 @@ final class EthPassKey extends PasskeyWithKnownAccount implements IEquatable<Eth
 
   String get documentID => _documentID!;
 
-  String get name => _name!;
+  String get displayName => _name!;
 
   String? get photoURL => _photoURL;
 

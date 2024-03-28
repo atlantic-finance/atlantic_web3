@@ -34,7 +34,7 @@ class Web3Passkey implements IWeb3Passkey {
   Boolean get isAuthenticate => _inMemoryPassPhrase != null;
 
   @override
-  set inMemoryPassPhrase(String passPhrase) =>
+  set inMemoryPassPhrase(String? passPhrase) =>
       _inMemoryPassPhrase = passPhrase;
 
   /// Permite generar frases mnemonic dependiendo el lenguaje y longitud, tambien
