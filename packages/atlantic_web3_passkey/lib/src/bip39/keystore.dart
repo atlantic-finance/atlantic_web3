@@ -116,6 +116,8 @@ abstract interface class IEthPassKeyStore {
 
   Future<Void> delete(EthPassKeyModel param);
 
+  Future<Void> deleteAll();
+
   Future<EthPassKeyModel> findDefault();
 
   Future<EthPassKeyModel> findOne(String passkeyID);
@@ -202,6 +204,22 @@ final class EthPassKeyStore extends KeyStore implements IEthPassKeyStore {
     // Prepare a statement to run it multiple times:
     db.prepare(query)
         .execute([param.passkeyID]);
+  }
+
+  @override
+  Future<Void> deleteAll() async {
+    // Get connection
+    final Database db = await getDbConnection();
+
+    // Create query
+    const String query = '''
+    DELETE FROM passkey;
+    VACUUM;
+    ''';
+
+    // Prepare a statement to run it multiple times:
+    db.prepare(query)
+        .execute();
   }
 
   @override
