@@ -189,14 +189,15 @@ void main() {
 
   test('Web3Passkey.saveEthPasskey()', () async {
 
-    final EthPassKey passkey1 = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
+    // Create
+    final EthPassKey passkey = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
 
-    //ID
-    const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
+    // Save
+    await web3.sing(PASSWORD);
 
-    final EthPassKey passkey2 = await web3.saveEthPasskey(documentId, 'Mi Wallet', passkey1, PASSWORD);
+    final EthPassKey passkeySaved = await web3.saveEthPasskey('3c5b0a43-e0c0-40ea-a698-fe88762382ff', 'Mi Wallet', passkey);
 
-    final result = passkey1.equals(passkey2);
+    final result = passkey.equals(passkeySaved);
 
     assert(result, 'No es igual la llave de acceso');
 
@@ -205,12 +206,14 @@ void main() {
 
   test('Web3Passkey.getEthPasskey()', () async {
 
+    await web3.sing(PASSWORD);
+
     final EthPassKey passkey1 = web3.createEthPassKey(Mnemonic.fromString(MNEMONIC), PASSWORD);
 
     //ID
     const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
 
-    final EthPassKey passkey2 = await web3.getEthPasskey(documentId, PASSWORD);
+    final EthPassKey passkey2 = await web3.getEthPasskey(documentId);
 
     final result = passkey1.equals(passkey2);
 
@@ -221,19 +224,23 @@ void main() {
 
   test('Web3Passkey.getAllEthPasskey()', () async {
 
-    final List<EthPassKey> list = await web3.getAllEthPasskey(PASSWORD);
+    await web3.sing(PASSWORD);
+
+    final List<EthPassKey> list = await web3.getAllEthPasskey();
 
     assert(list.isNotEmpty, 'No es igual la llave de acceso');
 
     print('Test passed !!!');
   });
 
-  test('Web3Passkey.setDefaultEthPasskey()', () async {
+  test('Web3Passkey.setCurrentEthPasskey()', () async {
+
+    await web3.sing(PASSWORD);
 
     //ID
     const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
 
-    final EthPassKey passKey = await web3.setCurrentEthPasskey(documentId, PASSWORD);
+    final EthPassKey passKey = await web3.setCurrentEthPasskey(documentId);
 
     final result = passKey.documentID.equals(documentId);
 
@@ -244,12 +251,11 @@ void main() {
 
   test('Web3Passkey.getDefaultEthPasskey()', () async {
 
-    //ID
-    const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
+    await web3.sing(PASSWORD);
 
-    final EthPassKey passKey = await web3.getCurrentEthPassKey(PASSWORD);
+    final EthPassKey passKey = await web3.getCurrentEthPassKey();
 
-    final result = passKey.documentID.equals(documentId);
+    final result = passKey.documentID.equals('3c5b0a43-e0c0-40ea-a698-fe88762382ff');
 
     assert(result, 'No es igual la llave de acceso');
 

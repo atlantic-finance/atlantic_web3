@@ -33,10 +33,6 @@ class Web3Passkey implements IWeb3Passkey {
   @override
   Boolean get isAuthenticate => _inMemoryPassPhrase != null;
 
-  @override
-  set inMemoryPassPhrase(String? passPhrase) =>
-      _inMemoryPassPhrase = passPhrase;
-
   /// Permite generar frases mnemonic dependiendo el lenguaje y longitud, tambien
   /// debe tomar en cuenta el id del dispositivo para usarlo como una entropy inicial
   /// para que sea de manera unica y aleatoria. La longitud de la frases se de determina
@@ -98,11 +94,34 @@ class Web3Passkey implements IWeb3Passkey {
     return EthBip32PassKey.fromKeyPair(keyPair);
   }
 
+
   @override
-  Future<EthPassKey> saveEthPasskey(String documentId, String name, EthPassKey passKey, String passPhrase) async {
+  Future<Boolean> sing(String passPhrase) async {
+    try {
+      _inMemoryPassPhrase = passPhrase;
+      //TODO: Falta la verificacion para evitar asignar una frase incorrecta
+      return true;
+    } catch(e) {
+      _inMemoryPassPhrase = null;
+      return false;
+    }
+  }
+
+  @override
+  Future<Void> signOut() async {
+    _inMemoryPassPhrase = null;
+  }
+
+  @override
+  Future<EthPassKey> saveEthPasskey(String documentId, String name, EthPassKey passKey) async {
+
+    // se debe autenticar para escribir datos
+    if (isAuthenticate == false) {
+      throw Error();
+    }
 
     final sha256 = SHA256Digest();
-    final key = sha256.process(utf8.encode(passPhrase));
+    final key = sha256.process(utf8.encode(_inMemoryPassPhrase!));
 
     final Encrypter algorithm = Encrypter(AES(Key(key)));
 
@@ -138,7 +157,12 @@ class Web3Passkey implements IWeb3Passkey {
   }
 
   @override
-  Future<EthPassKey> setCurrentEthPasskey(String passkeyID, String passPhrase) async {
+  Future<EthPassKey> setCurrentEthPasskey(String passkeyID) async {
+
+    // se debe autenticar para escribir datos
+    if (isAuthenticate == false) {
+      throw Error();
+    }
 
     final Integer exist = await _keyStore.exist(passkeyID);
 
@@ -146,8 +170,8 @@ class Web3Passkey implements IWeb3Passkey {
       throw Exception('No exist passkey');
     } else {
 
-      //set passphrase in memory
-      _inMemoryPassPhrase = passPhrase;
+      // //set passphrase in memory
+      // _inMemoryPassPhrase = passPhrase;
 
       final List<EthPassKeyModel> list = await _keyStore.find();
 
@@ -163,7 +187,7 @@ class Web3Passkey implements IWeb3Passkey {
     }
 
     // Reusar
-    return getCurrentEthPassKey(passPhrase);
+    return getCurrentEthPassKey();
   }
 
   @override
@@ -180,33 +204,10 @@ class Web3Passkey implements IWeb3Passkey {
   }
 
   @override
-  Future<EthPassKey> getCurrentEthPassKey(String passPhrase) async {
+  Future<EthPassKey> getCurrentEthPassKey() async {
 
-    final sha256 = SHA256Digest();
-    final key = sha256.process(utf8.encode(passPhrase));
-
-    final Encrypter algorithm = Encrypter(AES(Key(key)));
-
-    final DeviceResult device = await DeviceHelper.getDevice();
-    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
-
-    final EthPassKeyModel result = await _keyStore.findDefault();
-
-    final decName = algorithm.decrypt(Encrypted.fromBase64(result.name), iv: iv);
-    final decPrivateKey = algorithm.decrypt(Encrypted.fromBase64(result.privateKey), iv: iv);
-    final decPublicKey = algorithm.decrypt(Encrypted.fromBase64(result.publicKey), iv: iv);
-
-    // Encapsular claves publica y privada
-    final ECKeyPair keyPair = ECKeyPair.fromKeyPairInt(BigInt.parse(decPrivateKey), BigInt.parse(decPublicKey));
-
-    // Crear derivador de llaves de accesos usando las claves
-    return EthPassKey.fromKeyPairExtender(keyPair, result.passkeyID, decName, null);
-  }
-
-  @override
-  Future<EthPassKey> getInMemoryCurrentEthPassKey() async {
-
-    if (_inMemoryPassPhrase == null) {
+    // se debe autenticar para obtener los datos
+    if (isAuthenticate == false) {
       throw Error();
     }
 
@@ -232,9 +233,15 @@ class Web3Passkey implements IWeb3Passkey {
   }
 
   @override
-  Future<EthPassKey> getEthPasskey(String passkeyID, String passPhrase) async {
+  Future<EthPassKey> getEthPasskey(String passkeyID) async {
+
+    // se debe autenticar para obtener los datos
+    if (isAuthenticate == false) {
+      throw Error();
+    }
+
     final sha256 = SHA256Digest();
-    final key = sha256.process(utf8.encode(passPhrase));
+    final key = sha256.process(utf8.encode(_inMemoryPassPhrase!));
 
     final Encrypter algorithm = Encrypter(AES(Key(key)));
 
@@ -255,9 +262,15 @@ class Web3Passkey implements IWeb3Passkey {
   }
 
   @override
-  Future<List<EthPassKey>> getAllEthPasskey(String passPhrase) async {
+  Future<List<EthPassKey>> getAllEthPasskey() async {
+
+    // se debe autenticar para obtener los datos
+    if (isAuthenticate == false) {
+      throw Error();
+    }
+
     final sha256 = SHA256Digest();
-    final key = sha256.process(utf8.encode(passPhrase));
+    final key = sha256.process(utf8.encode(_inMemoryPassPhrase!));
 
     final Encrypter algorithm = Encrypter(AES(Key(key)));
 
@@ -281,5 +294,4 @@ class Web3Passkey implements IWeb3Passkey {
 
     return list;
   }
-
 }

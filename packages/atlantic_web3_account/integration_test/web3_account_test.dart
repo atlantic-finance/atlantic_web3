@@ -24,6 +24,9 @@ void main() {
     web3GasFee = Web3GasFee.instance();
     web3PassKey = Web3Passkey.instance();
 
+    //Authenticate
+    await web3PassKey.sing(PASSWORD);
+
     //Set Default PassKey
     if (true) {
 
@@ -34,7 +37,7 @@ void main() {
 
       const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
 
-      final EthPassKey passkey2 = await web3PassKey.saveEthPasskey(documentId, 'Mi Wallet', passKey, PASSWORD);
+      final EthPassKey passkey2 = await web3PassKey.saveEthPasskey(documentId, 'Mi Wallet', passKey);
     }
   });
 
