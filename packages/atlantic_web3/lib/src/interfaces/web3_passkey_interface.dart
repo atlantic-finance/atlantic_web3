@@ -16,7 +16,6 @@ abstract interface class IWeb3Passkey {
   // se debe autenticar para escribir datos
   Future<EthPassKey> saveEthPasskey(String documentId, String name, EthPassKey passKey);
   Future<EthPassKey> setCurrentEthPasskey(String passKeyID);
-  Future<Void> deleteEthPasskey(String passkeyID);
   Future<Void> deleteAllEthPasskey();
 
   // se debe autenticar para obtener los datos

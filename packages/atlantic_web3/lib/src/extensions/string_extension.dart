@@ -7,4 +7,17 @@ extension StringExtension on String {
   Boolean equals(String o) {
     return toString() == o;
   }
+
+  Integer parseInt() {
+    return Double.parse(this).toInt();
+  }
+
+  Boolean isNumeric() {
+    try {
+      Double.parse(this);
+    } on FormatException {
+      return false;
+    }
+    return true;
+  }
 }

@@ -177,16 +177,6 @@ void main() {
     print('Test passed !!!');
   });
 
-  test('Web3Passkey.deleteEthPasskey()', () async {
-
-    //ID
-    const documentId = '3c5b0a43-e0c0-40ea-a698-fe88762382ff';
-
-    await web3.deleteEthPasskey(documentId);
-
-    print('Test passed !!!');
-  });
-
   test('Web3Passkey.saveEthPasskey()', () async {
 
     // Create

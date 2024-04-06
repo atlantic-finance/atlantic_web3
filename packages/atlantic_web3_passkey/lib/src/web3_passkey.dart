@@ -191,19 +191,6 @@ class Web3Passkey implements IWeb3Passkey {
   }
 
   @override
-  Future<Void> deleteEthPasskey(String passkeyID) async {
-
-    final EthPassKeyModel result = await _keyStore.findOne(passkeyID);
-
-    //set passphrase in memory
-    if (result.isDefault == true) {
-      _inMemoryPassPhrase = null;
-    }
-
-    return _keyStore.delete(result);
-  }
-
-  @override
   Future<Void> deleteAllEthPasskey() async {
     return _keyStore.deleteAll();
   }
