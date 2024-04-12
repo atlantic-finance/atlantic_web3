@@ -201,8 +201,10 @@ final class EthPassKeyStore extends KeyStore implements IEthPassKeyStore {
     ''';
 
     // Prepare a statement to run it multiple times:
-    db.prepare(query)
+    final delete = db.prepare(query)
         .execute();
+
+    return delete;
   }
 
   @override
