@@ -192,7 +192,27 @@ class Web3Passkey implements IWeb3Passkey {
 
   @override
   Future<Void> deleteAllEthPasskey() async {
+
+    // se debe autenticar para obtener los datos
+    // if (isAuthenticate == false) {
+    //   throw Error();
+    // }
+
     return _keyStore.deleteAll();
+  }
+
+  @override
+  Future<Boolean> isEmpty() async {
+
+    // se debe autenticar para obtener los datos
+    // if (isAuthenticate == false) {
+    //   throw Error();
+    // }
+
+    final List<EthPassKeyModel> result =
+        await _keyStore.find();
+
+    return result.isEmpty;
   }
 
   @override
