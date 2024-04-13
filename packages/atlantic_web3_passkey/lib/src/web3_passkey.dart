@@ -126,7 +126,7 @@ class Web3Passkey implements IWeb3Passkey {
     final Encrypter algorithm = Encrypter(AES(Key(key)));
 
     final DeviceResult device = await DeviceHelper.getDevice();
-    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
+    final IV iv = IV.fromUtf8(DeviceHelper.formatDeviceName(device.code));
 
     final Encrypted encName = algorithm.encrypt(name, iv: iv);
     final Encrypted encPrivateKey = algorithm.encrypt(passKey.keyPair.privateKey.toString(), iv: iv);
@@ -229,7 +229,7 @@ class Web3Passkey implements IWeb3Passkey {
     final Encrypter algorithm = Encrypter(AES(Key(key)));
 
     final DeviceResult device = await DeviceHelper.getDevice();
-    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
+    final IV iv = IV.fromUtf8(DeviceHelper.formatDeviceName(device.code));
 
     final EthPassKeyModel result = await _keyStore.findDefault();
 
@@ -258,7 +258,7 @@ class Web3Passkey implements IWeb3Passkey {
     final Encrypter algorithm = Encrypter(AES(Key(key)));
 
     final DeviceResult device = await DeviceHelper.getDevice();
-    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
+    final IV iv = IV.fromUtf8(DeviceHelper.formatDeviceName(device.code));
 
     final EthPassKeyModel result = await _keyStore.findOne(passkeyID);
 
@@ -287,7 +287,7 @@ class Web3Passkey implements IWeb3Passkey {
     final Encrypter algorithm = Encrypter(AES(Key(key)));
 
     final DeviceResult device = await DeviceHelper.getDevice();
-    final IV iv = IV.fromUtf8(device.code.substring(0, 16));
+    final IV iv = IV.fromUtf8(DeviceHelper.formatDeviceName(device.code));
 
     final List<EthPassKeyModel> result = await _keyStore.find();
 

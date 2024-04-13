@@ -57,4 +57,18 @@ final class DeviceHelper {
 
     return DeviceResult(name, code);
   }
+
+  static String formatDeviceName(String name) {
+    String result = '';
+    if (name.isEmpty) {
+      throw Error();
+    } else if (name.length == 16 || name.length < 16) {
+      result = name;
+    } else if (name.length > 16) {
+      result = name.substring(0, 16);
+    }
+    return result;
+  }
 }
+
+
