@@ -20,4 +20,13 @@ extension StringExtension on String {
     }
     return true;
   }
+
+  Boolean isDate() {
+    try {
+      DateTime.parse(this);
+    } on FormatException {
+      return false;
+    }
+    return true;
+  }
 }
